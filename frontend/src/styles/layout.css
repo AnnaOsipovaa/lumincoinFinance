@@ -9,3 +9,11 @@
 .menu-item__text{
     font-size: 14px;
 }
+
+.dropdown-toggle::after{
+    display: none;
+}
+
+.btn-check:checked+.btn, .btn.active, .btn.show, .btn:first-child:active, :not(.btn-check)+.btn:active {
+    border-color: transparent;
+}
