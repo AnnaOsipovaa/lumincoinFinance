@@ -3,5 +3,11 @@
 }
 
 .main__diagrams{
-    max-width: 437px;
+    max-width: 520px;
+}
+
+@media screen and (max-width: 530px){
+    .main__btn{
+        min-width: 60px;
+    }
 }
