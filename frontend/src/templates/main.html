@@ -33,7 +33,7 @@
                     <div class="ps-3 pe-3 pt-5">
                         <ul class="nav nav-pills flex-column">
                             <li class="nav-item">
-                                <a href="#" class="d-flex align-items-center nav-link active" aria-current="page">
+                                <a href="main.html" class="d-flex align-items-center nav-link active" aria-current="page">
                                     <div class="me-2 menu-item__icon">
                                         <img src="../static/img/icon-home.svg" alt="">
                                     </div>
@@ -41,46 +41,55 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#" class="d-flex align-items-center nav-link link-body-emphasis">
+                                <a href="income-and-expenses/income-and-expenses-list.html" class="d-flex align-items-center nav-link">
                                     <div class="me-2 menu-item__icon">
                                         <img src="../static/img/icon-money.svg" alt="">
                                     </div>
                                     <div class="menu-item__text">Доходы & Расходы</div>
                                 </a>
                             </li>
-                            <div class="dropdown">
-                                <button class="btn dropdown-toggle w-100 d-flex justify-content-between" type="button"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    <div class="menu-item__text">Категории</div>
-                                    <div>
-                                        <img src="../static/img/ivon-path.svg" alt="">
+                            <li>
+                                <div class="accordion" id="accordionExample">
+                                    <div class="accordion-item border border-white overflow-hidden">
+                                        <h2 class="accordion-header">
+                                            <button class="d-flex align-items-center justify-content-between btn accordion-button collapsed py-2 rounded-0 focus-ring menu-item__text" style="--bs-focus-ring-color: none" type="button" data-bs-toggle="collapse" data-bs-target="#category-list" aria-expanded="false" aria-controls="category-list">
+                                                <span>Категории</span> 
+                                            </button>
+                                        </h2>
+                                        <div id="category-list" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                                            <div class="accordion-body w-100 p-0">
+                                                <a class="dropdown-item menu-item__text rounded-0 menu-item__text nav-link" href="income/income-category-list.html">Доходы</a>
+                                                <a class="dropdown-item menu-item__text rounded-0 menu-item__text nav-link" href="expenses/expenses-category-list.html">Расходы</a>
+                                            </div>
+                                        </div>
                                     </div>
-                                </button>
-                                <ul class="dropdown-menu w-100 border border-primary p-0">
-                                    <li><a class="dropdown-item pt-2 pb-2 rounded-top menu-item__text" href="#">Доходы</a></li>
-                                    <li><a class="dropdown-item pt-2 pb-2 rounded-bottom menu-item__text" href="#">Расходы</a></li>
-                                </ul>
-                            </div>
+                                </div>
                             </li>
                         </ul>
                     </div>
                 </div>
                 <div>
-                    <div class="ps-3 pe-3 pb-3 menu-item__text text-primary-emphasis fw-semibold">Баланс: <span
-                            class="text-primary">500$</span></div>
+                    <div class="ps-3 pe-3 pb-3 menu-item__text text-primary-emphasis fw-semibold">Баланс: <span class="text-primary">500$</span></div>
                     <div class="d-flex align-items-center ps-3 pe-3 pb-4 pt-4 border-top">
-                        <div class="me-1">
-                            <img src="../static/img/icon-user.png" alt="" width="32" height="32"
-                                class="rounded-circle me-2">
+
+                        <div class="dropend">
+                            <div class="d-flex align-items-center dropdown-toggle btn-logout btn p-0" data-bs-toggle="dropdown" aria-expanded="false">
+                                <div class="me-1">
+                                    <img src="../static/img/icon-user.png" alt="" width="32" height="32" class="rounded-circle me-2">
+                                </div>
+                                <div class="menu-item__text text-primary-emphasis btn-group dropend">RomanChernov</div>
+                            </div>
+                            <ul class="dropdown-menu p-2 ms-1">
+                               <li><a href="#" class="text-decoration-none">Выйти из профиля</a></li>
+                            </ul>
                         </div>
-                        <div class="menu-item__text text-primary-emphasis">RomanChernov</div>
                     </div>
                 </div>
             </div>
         </div>
     
         <div class="w-100 container px-3 py-4 px-lg-5 py-lg-5 mt-5 mt-lg-0">
-            <h1 class="text-primary-emphasis mb-3 mb-xl-5">Главная</h1>
+            <h1 class="text-primary-emphasis mb-3 mb-xl-4">Главная</h1>
             <div class="d-flex align-items-center flex-wrap mb-1 justify-content-center justify-content-xl-start">
                 <input type="radio" class="btn-check" name="options" id="option1" autocomplete="off" checked>
                 <label class="btn border-secondary btn-outline-secondary me-1 me-sm-3 fw-medium main__btn px-2 py-1 mb-1 mb-sm-2"

@@ -10,10 +10,32 @@
     font-size: 14px;
 }
 
-.dropdown-toggle::after{
+.dropdown-toggle::after,
+.dropend .btn-logout::after{
     display: none;
 }
 
 .btn-check:checked+.btn, .btn.active, .btn.show, .btn:first-child:active, :not(.btn-check)+.btn:active {
     border-color: transparent;
 }
+
+.accordion-button::after {
+    transform: rotate(-90deg);
+}
+
+.accordion-button:not(.collapsed)::after {
+    transform: rotate(0deg);
+   background-image: url('../static/img/icon-arrow.svg');
+}
+
+.accordion-item:has(.accordion-button:not(.collapsed)){
+    border: 1px solid #0d6efd!important;
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: #0d6efd!important;
+    color: white!important;
+}
+
+
+

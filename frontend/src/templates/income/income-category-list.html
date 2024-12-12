@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Создание категории доходов</title>
+    <title>Доходы</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="../styles/layout.css">
+    <link rel="stylesheet" href="../../styles/layout.css">
 </head>
 <body>
 
@@ -24,7 +24,7 @@
                 <div>
                     <div class="text-center pt-4 pb-3 border-bottom">
                         <a href="/">
-                            <img src="../static/img/logo.png" alt="logo" class="logo-img">
+                            <img src="../../static/img/logo.png" alt="logo" class="logo-img">
                         </a>
                     </div>
                     <div class="ps-3 pe-3 pt-5">
@@ -32,7 +32,7 @@
                             <li class="nav-item">
                                 <a href="#" class="d-flex align-items-center nav-link active" aria-current="page">
                                     <div class="me-2 menu-item__icon">
-                                        <img src="../static/img/icon-home.svg" alt="">
+                                        <img src="../../static/img/icon-home.svg" alt="">
                                     </div>
                                     <div class="menu-item__text">Главная</div>
                                 </a>
@@ -40,7 +40,7 @@
                             <li>
                                 <a href="#" class="d-flex align-items-center nav-link link-body-emphasis">
                                     <div class="me-2 menu-item__icon">
-                                        <img src="../static/img/icon-money.svg" alt="">
+                                        <img src="../../static/img/icon-money.svg" alt="">
                                     </div>
                                     <div class="menu-item__text">Доходы & Расходы</div>
                                 </a>
@@ -50,7 +50,7 @@
                                     data-bs-toggle="dropdown" aria-expanded="false">
                                     <div class="menu-item__text">Категории</div>
                                     <div>
-                                        <img src="../static/img/ivon-path.svg" alt="">
+                                        <img src="../../static/img/ivon-path.svg" alt="">
                                     </div>
                                 </button>
                                 <ul class="dropdown-menu w-100 border border-primary p-0">
@@ -67,7 +67,7 @@
                             class="text-primary">500$</span></div>
                     <div class="d-flex align-items-center ps-3 pe-3 pb-4 pt-4 border-top">
                         <div class="me-1">
-                            <img src="../static/img/icon-user.png" alt="" width="32" height="32"
+                            <img src="../../static/img/icon-user.png" alt="" width="32" height="32"
                                 class="rounded-circle me-2">
                         </div>
                         <div class="menu-item__text text-primary-emphasis">RomanChernov</div>
@@ -77,15 +77,66 @@
         </div>
 
         <div class="w-100 container px-3 py-4 px-lg-5 px-sm-5 py-lg-5 mt-5 mt-lg-0">
-            <h1 class="text-primary-emphasis mb-3 mb-xl-5">Создание категории доходов</h1>
-            <div class="row">
-                <form action="" class="col-12 col-sm-9 col-md-7 col-lg-6 col-xl-4">
-                    <input type="text" class="form-control" id="name" placeholder="Название...">
-                    <div class="text-center d-flex align-items-center mt-3">
-                        <button type="button" class="btn btn-success me-2 px-3 py-1">Создать</button>
-                        <button type="reset" class="btn btn-danger px-3 py-1">Отмена</button>
+            <h1 class="text-primary-emphasis mb-3 mb-xl-4">Доходы</h1>
+            <div class="row gx-3 gy-3">
+                <div class="col-12 col-xl-4">
+                    <div class="p-3 border rounded-3">
+                        <h3 class="mb-3">Депозиты</h3>
+                        <div class="d-flex">
+                            <button type="button" class="btn btn-primary px-3 me-2">Редактировать</button>
+                            <button type="button" class="btn btn-danger px-3" data-bs-toggle="modal" data-bs-target=".modal">Удалить</button>
+                        </div>
                     </div>
-                </form>
+                </div>
+                <div class="col-12 col-xl-4">
+                    <div class="p-3 border rounded-3">
+                        <h3 class="mb-3">Зарплата</h3>
+                        <div class="d-flex">
+                            <button type="button" class="btn btn-primary px-3 me-2">Редактировать</button>
+                            <button type="button" class="btn btn-danger px-3" data-bs-toggle="modal" data-bs-target=".modal">Удалить</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-xl-4">
+                    <div class="p-3 border rounded-3">
+                        <h3 class="mb-3">Сбережения</h3>
+                        <div class="d-flex">
+                            <button type="button" class="btn btn-primary px-3 me-2">Редактировать</button>
+                            <button type="button" class="btn btn-danger px-3" data-bs-toggle="modal" data-bs-target=".modal">Удалить</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-xl-4">
+                    <div class="p-3 border rounded-3">
+                        <h3 class="mb-3">Инвестиции</h3>
+                        <div class="d-flex">
+                            <button type="button" class="btn btn-primary px-3 me-2">Редактировать</button>
+                            <button type="button" class="btn btn-danger px-3" data-bs-toggle="modal" data-bs-target=".modal">Удалить</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-xl-4">
+                    <div class="w-100 h-100 border p-5 rounded-3 d-flex align-items-center justify-content-center">
+                        <img src="../../static/img/icon-plus.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content  p-3">
+                <div class="modal-body">
+                    <div class="mb-3 fw-medium text-center lh-1">
+                        <div>Вы действительно хотите удалить категорию?</div> 
+                        <div>Связанные доходы будут удалены навсегда.</div>
+                    </div>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success me-2">Да, удалить</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Не удалять</button>
+                    </div>
+                </div>
+              </div>
             </div>
         </div>
     </main>
