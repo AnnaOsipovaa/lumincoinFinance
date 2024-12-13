@@ -10,6 +10,22 @@
     font-size: 14px;
 }
 
+.nav-link .menu-icon__svg path{
+    fill: #052c65!important;
+}
+
+.nav-link .menu-item__text{
+    color: #052c65!important;
+}
+
+.nav-link.active .menu-icon__svg path{
+    fill: white!important;
+}
+
+.nav-link.active .menu-item__text{
+    color: white!important;
+}
+
 .dropdown-toggle::after,
 .dropend .btn-logout::after{
     display: none;
