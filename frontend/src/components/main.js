@@ -1,8 +1,10 @@
-class Main {
+import Chart from 'chart.js/auto';
+
+export class Main {
     constructor() {
         this.diagramsIncome = document.getElementById('diagrams-income');
         this.diagramsExpenses = document.getElementById('diagrams-expenses');
-
+        
         this.initDiagrams();
     }
 
@@ -62,10 +64,6 @@ class Main {
         };
         new Chart(this.diagramsExpenses, configDiagramExpenses);
     }
-}
-
-window.onload = () => {
-    new Main();
 }
 
 

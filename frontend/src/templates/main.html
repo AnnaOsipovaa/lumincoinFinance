@@ -1,154 +1,46 @@
-<!DOCTYPE html>
-<html lang="ru">
+<div class="w-100 container px-3 py-4 px-lg-5 py-lg-5 mt-5 mt-lg-0">
+    <h1 class="text-primary-emphasis mb-3 mb-xl-4">Главная</h1>
+    <div class="d-flex align-items-center flex-wrap mb-1 justify-content-center justify-content-xl-start">
+        <input type="radio" class="btn-check" name="options" id="option1" autocomplete="off" checked>
+        <label class="btn border-secondary btn-outline-secondary me-1 me-sm-3 fw-medium main__btn px-2 py-1 mb-1 mb-sm-2"
+            for="option1">Сегодня</label>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Главная</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="../styles/layout.css">
-    <link rel="stylesheet" href="../styles/main.css">
-</head>
+        <input type="radio" class="btn-check" name="options" id="option2" autocomplete="off">
+        <label class="btn border-secondary btn-outline-secondary me-1 me-sm-3 fw-medium main__btn px-2 py-1 mb-1 mb-sm-2"
+            for="option2">Неделя</label>
 
-<body>
+        <input type="radio" class="btn-check" name="options" id="option3" autocomplete="off">
+        <label class="btn border-secondary btn-outline-secondary me-1 me-sm-3 fw-medium main__btn px-2 py-1 mb-1 mb-sm-2"
+            for="option3">Месяц</label>
 
-    <main class="d-flex flex-nowrap">
-        <div>
-            <nav class="navbar bg-body-tertiary d-block d-lg-none position-fixed w-100">
-                <div class="container-fluid">
-                  <button class="navbar-toggler border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                  </button>
-                </div>
-            </nav>
-    
-            <div class="offcanvas-lg offcanvas-start min-vh-100 d-flex flex-column justify-content-between flex-shrink-0 border-end" style="width: 219px;" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-                <div>
-                    <div class="text-center pt-4 pb-3 border-bottom">
-                        <a href="/">
-                            <img src="../static/img/logo.png" alt="logo" class="logo-img">
-                        </a>
-                    </div>
-                    <div class="ps-3 pe-3 pt-5">
-                        <ul class="nav nav-pills flex-column">
-                            <li class="nav-item">
-                                <a href="main.html" class="d-flex align-items-center nav-link active" aria-current="page">
-                                    <div class="me-2 menu-item__icon">
-                                        <svg class="menu-icon__svg" width="15" height="14" viewBox="0 0 15 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M1.5 12.3964V5.89644H2.5V12.3964C2.5 12.6726 2.72386 12.8964 3 12.8964H12C12.2761 12.8964 12.5 12.6726 12.5 12.3964V5.89644H13.5V12.3964C13.5 13.2249 12.8284 13.8964 12 13.8964H3C2.17157 13.8964 1.5 13.2249 1.5 12.3964Z" fill="white"/>
-                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M12.5 1.39644V4.89644L10.5 2.89644V1.39644C10.5 1.1203 10.7239 0.89644 11 0.89644H12C12.2761 0.89644 12.5 1.1203 12.5 1.39644Z" fill="white"/>
-                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M6.79289 0.39644C7.18342 0.00591397 7.81658 0.00591606 8.20711 0.39644L14.8536 7.04289C15.0488 7.23815 15.0488 7.55473 14.8536 7.74999C14.6583 7.94526 14.3417 7.94526 14.1464 7.74999L7.5 1.10355L0.853553 7.74999C0.658291 7.94526 0.341709 7.94526 0.146447 7.74999C-0.0488155 7.55473 -0.0488155 7.23815 0.146447 7.04289L6.79289 0.39644Z" fill="white"/>
-                                        </svg>
-                                    </div>
-                                    <div class="menu-item__text">Главная</div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="income-and-expenses/income-and-expenses-list.html" class="d-flex align-items-center nav-link">
-                                    <div class="me-2 menu-item__icon">
-                                        <svg class="menu-icon__svg" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M11 15C13.2091 15 15 13.2091 15 11C15 8.79086 13.2091 7 11 7C8.79086 7 7 8.79086 7 11C7 13.2091 8.79086 15 11 15ZM16 11C16 13.7614 13.7614 16 11 16C8.23858 16 6 13.7614 6 11C6 8.23858 8.23858 6 11 6C13.7614 6 16 8.23858 16 11Z" fill="#052C65"/>
-                                            <path d="M9.4375 11.9444C9.48519 12.5403 9.95568 13.0049 10.8013 13.0599V13.5H11.1764V13.0568C12.0507 12.9957 12.5625 12.5281 12.5625 11.8496C12.5625 11.2323 12.1715 10.9144 11.4721 10.7494L11.1764 10.6791V9.48105C11.5516 9.52384 11.79 9.72861 11.8472 10.0128H12.5053C12.4576 9.43826 11.9648 8.989 11.1764 8.9401V8.5H10.8013V8.94927C10.0542 9.02262 9.54559 9.47188 9.54559 10.1076C9.54559 10.6699 9.92389 11.0275 10.5533 11.1742L10.8013 11.2353V12.5067C10.4166 12.4487 10.1623 12.2378 10.1051 11.9444H9.4375ZM10.7981 10.5905C10.4294 10.5049 10.2291 10.3307 10.2291 10.0678C10.2291 9.77445 10.4453 9.5544 10.8013 9.49022V10.5905H10.7981ZM11.2305 11.3362C11.6787 11.4401 11.8854 11.6082 11.8854 11.9046C11.8854 12.2439 11.6279 12.4762 11.1764 12.5189V11.324L11.2305 11.3362Z" fill="#052C65"/>
-                                            <path d="M1 0C0.447715 0 0 0.447716 0 1V9C0 9.55229 0.447715 10 1 10H5.08296C5.1407 9.65585 5.22773 9.32163 5.34141 9H3C3 7.89543 2.10457 7 1 7V3C2.10457 3 3 2.10457 3 1H13C13 2.10457 13.8954 3 15 3V6.52779C15.3801 6.86799 15.7166 7.25594 16 7.68221V1C16 0.447715 15.5523 0 15 0H1Z" fill="#052C65"/>
-                                            <path d="M9.9983 5.08325C9.99943 5.05564 10 5.02789 10 5C10 3.89543 9.10457 3 8 3C6.89543 3 6 3.89543 6 5C6 5.6845 6.34387 6.28869 6.86829 6.64924C7.71486 5.84504 8.79591 5.28533 9.9983 5.08325Z" fill="#052C65"/>
-                                        </svg>
-                                    </div>
-                                    <div class="menu-item__text">Доходы & Расходы</div>
-                                </a>
-                            </li>
-                            <li>
-                                <div class="accordion" id="accordionExample">
-                                    <div class="accordion-item border border-white overflow-hidden">
-                                        <h2 class="accordion-header">
-                                            <button class="d-flex align-items-center justify-content-between btn accordion-button collapsed py-2 rounded-0 focus-ring menu-item__text" style="--bs-focus-ring-color: none" type="button" data-bs-toggle="collapse" data-bs-target="#category-list" aria-expanded="false" aria-controls="category-list">
-                                                <span>Категории</span> 
-                                            </button>
-                                        </h2>
-                                        <div id="category-list" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                                            <div class="accordion-body w-100 p-0">
-                                                <a class="dropdown-item menu-item__text rounded-0 menu-item__text nav-link" href="income/income-category-list.html">Доходы</a>
-                                                <a class="dropdown-item menu-item__text rounded-0 menu-item__text nav-link" href="expenses/expenses-category-list.html">Расходы</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div>
-                    <div class="ps-3 pe-3 pb-3 menu-item__text text-primary-emphasis fw-semibold">Баланс: <span class="text-primary">500$</span></div>
-                    <div class="d-flex align-items-center ps-3 pe-3 pb-4 pt-4 border-top">
+        <input type="radio" class="btn-check" name="options" id="option4" autocomplete="off">
+        <label class="btn border-secondary btn-outline-secondary me-1 me-sm-3 fw-medium main__btn px-2 py-1 mb-1 mb-sm-2"
+            for="option4">Год</label>
 
-                        <div class="dropend">
-                            <div class="d-flex align-items-center dropdown-toggle btn-logout btn p-0" data-bs-toggle="dropdown" aria-expanded="false">
-                                <div class="me-1">
-                                    <img src="../static/img/icon-user.png" alt="" width="32" height="32" class="rounded-circle me-2">
-                                </div>
-                                <div class="menu-item__text text-primary-emphasis btn-group dropend">RomanChernov</div>
-                            </div>
-                            <ul class="dropdown-menu p-2 ms-1">
-                               <li><a href="#" class="text-primary-emphasis text-decoration-none">Выйти из профиля</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+        <input type="radio" class="btn-check" name="options" id="option5" autocomplete="off">
+        <label class="btn border-secondary btn-outline-secondary me-1 me-sm-3 fw-medium main__btn px-2 py-1 mb-1 mb-sm-2"
+            for="option5">Все</label>
+
+        <div class="d-flex align-items-center mb-1 mb-sm-2">
+            <input type="radio" class="btn-check" name="options" id="option6" autocomplete="off">
+            <label class="btn border-secondary btn-outline-secondary me-1 me-sm-3 fw-medium main__btn px-2 py-1"
+                for="option6">Интервал</label>
+            <div>
+                <span class="me-1 fw-medium">c</span>
+                <span class="me-2 text-secondary fw-medium border-bottom border-secondary">Дата</span>
+                <span class="me-1 fw-medium">по</span>
+                <span class="text-secondary fw-medium border-bottom border-secondary">Дата</span>
             </div>
         </div>
-    
-        <div class="w-100 container px-3 py-4 px-lg-5 py-lg-5 mt-5 mt-lg-0">
-            <h1 class="text-primary-emphasis mb-3 mb-xl-4">Главная</h1>
-            <div class="d-flex align-items-center flex-wrap mb-1 justify-content-center justify-content-xl-start">
-                <input type="radio" class="btn-check" name="options" id="option1" autocomplete="off" checked>
-                <label class="btn border-secondary btn-outline-secondary me-1 me-sm-3 fw-medium main__btn px-2 py-1 mb-1 mb-sm-2"
-                    for="option1">Сегодня</label>
-
-                <input type="radio" class="btn-check" name="options" id="option2" autocomplete="off">
-                <label class="btn border-secondary btn-outline-secondary me-1 me-sm-3 fw-medium main__btn px-2 py-1 mb-1 mb-sm-2"
-                    for="option2">Неделя</label>
-
-                <input type="radio" class="btn-check" name="options" id="option3" autocomplete="off">
-                <label class="btn border-secondary btn-outline-secondary me-1 me-sm-3 fw-medium main__btn px-2 py-1 mb-1 mb-sm-2"
-                    for="option3">Месяц</label>
-
-                <input type="radio" class="btn-check" name="options" id="option4" autocomplete="off">
-                <label class="btn border-secondary btn-outline-secondary me-1 me-sm-3 fw-medium main__btn px-2 py-1 mb-1 mb-sm-2"
-                    for="option4">Год</label>
-
-                <input type="radio" class="btn-check" name="options" id="option5" autocomplete="off">
-                <label class="btn border-secondary btn-outline-secondary me-1 me-sm-3 fw-medium main__btn px-2 py-1 mb-1 mb-sm-2"
-                    for="option5">Все</label>
-
-                <div class="d-flex align-items-center mb-1 mb-sm-2">
-                    <input type="radio" class="btn-check" name="options" id="option6" autocomplete="off">
-                    <label class="btn border-secondary btn-outline-secondary me-1 me-sm-3 fw-medium main__btn px-2 py-1"
-                        for="option6">Интервал</label>
-                    <div>
-                        <span class="me-1 fw-medium">c</span>
-                        <span class="me-2 text-secondary fw-medium border-bottom border-secondary">Дата</span>
-                        <span class="me-1 fw-medium">по</span>
-                        <span class="text-secondary fw-medium border-bottom border-secondary">Дата</span>
-                    </div>
-                </div>
-            </div>
-            <div class="row pt-4 pt-xl-5 justify-content-center justify-content-xl-start">
-                <div class="col-12 col-xl-6 main__diagrams pe-0 pe-xl-5 mb-5 mb-xl-0">
-                    <h3 class="text-center mb-3 text-primary-emphasis">Доходы</h3>
-                    <canvas id="diagrams-income"></canvas>
-                </div>
-                <div class="col-12 col-xl-6 main__diagrams ps-0 ps-xl-5">
-                    <h3 class="text-center mb-3 text-primary-emphasis">Расходы</h3>
-                    <canvas id="diagrams-expenses"></canvas>
-                </div>
-            </div>
+    </div>
+    <div class="row pt-4 pt-xl-5 justify-content-center justify-content-xl-start">
+        <div class="col-12 col-xl-6 main__diagrams pe-0 pe-xl-5 mb-5 mb-xl-0">
+            <h3 class="text-center mb-3 text-primary-emphasis">Доходы</h3>
+            <canvas id="diagrams-income"></canvas>
         </div>
-    </main>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="../components/main.js"></script>
-</body>
-</html>
+        <div class="col-12 col-xl-6 main__diagrams ps-0 ps-xl-5">
+            <h3 class="text-center mb-3 text-primary-emphasis">Расходы</h3>
+            <canvas id="diagrams-expenses"></canvas>
+        </div>
+    </div>
+</div>
