@@ -1,11 +1,14 @@
+import { elements } from "chart.js";
+import { Login } from "./components/auth/login.js";
+import { Signup } from "./components/auth/signup.js";
 import { Main } from "./components/main.js";
+import { FileUtils } from "./utils/file-utils.js";
 
 export class Router {
     constructor() {
 
-        this.title = document.getElementById('title');
-        this.content = document.getElementById('content');
-        this.contentInLayout = null;
+        this.titleElement = document.getElementById('title');
+        this.contentElement = document.getElementById('content');
 
         this.routers = [
             {
@@ -22,7 +25,19 @@ export class Router {
             },
             {
                 route: '/login',
-                title: 'Авторизация'
+                title: 'Авторизация',
+                content: 'templates/auth/login.html',
+                load: () => {
+                    new Login();
+                },
+            },
+            {
+                route: '/signup',
+                title: 'Регистрация',
+                content: 'templates/auth/signup.html',
+                load: () => {
+                    new Signup();
+                },
             }
         ]
 
@@ -30,62 +45,69 @@ export class Router {
     }
 
     initEvents() {
-        window.addEventListener('DOMContentLoaded', this.openRoute.bind(this));
-        window.addEventListener('popstate', this.openRoute.bind(this));
+        window.addEventListener('DOMContentLoaded', this.activateRoute.bind(this));
+        window.addEventListener('popstate', this.activateRoute.bind(this));
         document.addEventListener('click', this.clickHandler.bind(this));
     }
 
-    clickHandler() {
-        console.log('clickHandler');
+    async clickHandler(e) {
+        let element = e.target;
+
+        if (element.nodeName === 'A') {
+            e.preventDefault();
+
+            const currentRoute = window.location.pathname;
+            const url = element.href.replace(window.location.origin, '');
+            if (!url || currentRoute === url.replace('#', '') || url.startsWith('javascript:void(0)')) {
+                return;
+            }
+            await this.openRoute(url);
+        }
     }
 
-    async openRoute() {
+    async openRoute(url) {
+        const currenrRoute = window.location.pathname;
+        history.pushState({}, '', url);
+        await this.activateRoute(null, currenrRoute);
+    }
+
+    async activateRoute(e, oldRoute = null) {
+        if (oldRoute) {
+            const oldRouteObject = this.routers.find(item => item.route === oldRoute);
+            if (oldRouteObject.styles && oldRouteObject.styles.length > 0) {
+                oldRouteObject.styles.forEach(item => {
+                    document.querySelector(`link[href="/styles/${item}"]`).remove()
+                });
+            }
+        }
+
         const path = (window.location.pathname).split('&')[0];
+        const newRouteObject = this.routers.find(item => item.route === path);
 
-        const newRoute = this.routers.find(item => item.route === path);
-
-        if (newRoute) {
-            if (newRoute.title) {
-                this.title.innerText = newRoute.title;
+        if (newRouteObject) {
+            if (newRouteObject.title) {
+                this.titleElement.innerText = newRouteObject.title;
             }
 
-            if (newRoute.layout) {
-                const layout = await fetch(newRoute.layout);
-                this.content.innerHTML = await layout.text();
+            let contentBlock = this.contentElement;
+            if (newRouteObject.layout) {
+                const layout = await fetch(newRouteObject.layout);
+                this.contentElement.innerHTML = await layout.text();
+                contentBlock = document.getElementById('content-layout');
+            }
+            const content = await fetch(newRouteObject.content);
+            contentBlock.innerHTML = await content.text();
 
-                if (newRoute.content) {
-                    if (!this.contentInLayout) {
-                        this.contentInLayout = document.getElementById('content-layout');
-                    }
-                    const content = await fetch(newRoute.content);
-                    this.contentInLayout.innerHTML = await content.text();
-                }
-            } else {
-                const layout = await fetch(newRoute.content);
-                this.content.innerHTML = await layout.text();
+            if (newRouteObject.styles && newRouteObject.styles.length > 0) {
+                newRouteObject.styles.forEach(fileHref => FileUtils.loadPageStyle(fileHref))
             }
 
-            if (newRoute.styles && newRoute.styles.length > 0) {
-                newRoute.styles.forEach(file => {
-                    const link = document.createElement('link');
-                    link.href = 'styles/' + file;
-                    link.type = 'text/css';
-                    link.rel = 'stylesheet';
-                    document.head.appendChild(link);
-                })
+            if (newRouteObject.scripts && newRouteObject.scripts.length > 0) {
+                newRouteObject.scripts.forEach(fileSrc => FileUtils.loadPageScript(fileSrc));
             }
 
-            if (newRoute.scripts && newRoute.scripts.length > 0) {
-                newRoute.scripts.forEach(file => {
-                    const script = document.createElement('script');
-                    script.src = 'js/' + file;
-                    script.type = 'module';
-                    document.body.appendChild(script);
-                })
-            }
-
-            if(newRoute.load && typeof newRoute.load === 'function'){
-                newRoute.load();
+            if (newRouteObject.load && typeof newRouteObject.load === 'function') {
+                newRouteObject.load();
             }
         }
     }

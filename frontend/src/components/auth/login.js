@@ -1,4 +1,4 @@
-class Login {
+export class Login {
     constructor() {
         document.getElementById('login').addEventListener('click', this.login.bind(this)); 
     
@@ -6,9 +6,9 @@ class Login {
         this.passwordInputElement = document.getElementById('password');
     }
 
-    login(){
+    async login(){
         if(this.validationForm()){
-            
+            //let response = await fetch('')
         }
     }
 
@@ -25,8 +25,4 @@ class Login {
             error = true;
         }
     }
-}
-
-window.onload = () => {
-    new Login();
 }

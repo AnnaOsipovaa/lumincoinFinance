@@ -1,4 +1,4 @@
-class Signup {
+export class Signup {
     constructor() {
         document.getElementById('signup').addEventListener('click', this.signup.bind(this)); 
     
@@ -38,8 +38,4 @@ class Signup {
             error = true;
         }
     }
-}
-
-window.onload = () => {
-    new Signup();
 }
