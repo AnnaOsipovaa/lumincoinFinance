@@ -38,7 +38,94 @@ export class Router {
                 load: () => {
                     new Signup();
                 },
-            }
+            },
+            {
+                route: '/logout',
+                load: () => {
+                    
+                }
+            },
+            {
+                route: '/income-and-expenses-list',
+                title: 'Доходы и расходы',
+                layout: 'templates/layout.html',
+                content: 'templates/income-and-expenses/income-and-expenses-list.html',
+                load: () => {
+                    
+                }
+            },
+            {
+                route: '/income-and-expenses-edit',
+                title: 'Редактирование дохода/расхода',
+                layout: 'templates/layout.html',
+                content: 'templates/income-and-expenses/income-and-expenses-edit.html',
+                load: () => {
+                    
+                }
+            },
+            {
+                route: '/income-and-expenses-create',
+                title: 'Создание дохода/расхода',
+                layout: 'templates/layout.html',
+                content: 'templates/income-and-expenses/income-and-expenses-create.html',
+                load: () => {
+                    
+                }
+            },
+            {
+                route: '/income-category-list',
+                title: 'Доходы',
+                layout: 'templates/layout.html',
+                content: 'templates/income/income-category-list.html',
+                load: () => {
+                    
+                }
+            },
+            {
+                route: '/income-category-create',
+                title: 'Создание категории доходов',
+                layout: 'templates/layout.html',
+                content: 'templates/income/income-category-create.html',
+                load: () => {
+                    
+                }
+            },
+            {
+                route: '/income-category-edit',
+                title: 'Редактирование категории доходов',
+                layout: 'templates/layout.html',
+                content: 'templates/income/income-category-edit.html',
+                load: () => {
+                    
+                }
+            },
+            {
+                route: '/expenses-category-list',
+                title: 'Расходы',
+                layout: 'templates/layout.html',
+                content: 'templates/expenses/expenses-category-list.html',
+                load: () => {
+                    
+                }
+            },
+            { 
+                route: '/expenses-category-create',
+                title: 'Создание категории расходов',
+                layout: 'templates/layout.html',
+                content: 'templates/expenses/expenses-category-create.html',
+                load: () => {
+                    
+                }
+            },
+            {
+                route: '/expenses-category-edit',
+                title: 'Редактирование категории расходов',
+                layout: 'templates/layout.html',
+                content: 'templates/expenses/expenses-category-edit.html',
+                load: () => {
+                    
+                }
+            },
         ]
 
         this.initEvents();
