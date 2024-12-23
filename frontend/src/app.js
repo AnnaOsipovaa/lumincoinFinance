@@ -4,6 +4,7 @@ import * as bootstrap from 'bootstrap';
 
 class App{
     constructor(){
+        debugger
         new Router();
     }
 }

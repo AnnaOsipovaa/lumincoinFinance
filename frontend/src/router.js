@@ -138,9 +138,17 @@ export class Router {
     }
 
     async clickHandler(e) {
-        let element = e.target;
+         
+        let element = null;
+        if (e.target.nodeName === 'A') {
+            element = e.target;
+        }else{
+            if (e.target.parentNode.nodeName === 'A') {
+                element =  e.target.parentNode;
+            }
+        }
 
-        if (element.nodeName === 'A') {
+        if (element) {
             e.preventDefault();
 
             const currentRoute = window.location.pathname;
