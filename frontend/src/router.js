@@ -3,6 +3,8 @@ import { Login } from "./components/auth/login.js";
 import { Signup } from "./components/auth/signup.js";
 import { Main } from "./components/main.js";
 import { FileUtils } from "./utils/file-utils.js";
+import { logout } from "./components/auth/logout.js";
+import { StorageUtils } from "./utils/storage-utils.js";
 
 export class Router {
     constructor() {
@@ -16,6 +18,7 @@ export class Router {
                 title: 'Главная',
                 layout: 'templates/layout.html',
                 content: 'templates/main.html',
+                authorization: true,
                 load: () => {
                     new Main();
                 },
@@ -42,7 +45,7 @@ export class Router {
             {
                 route: '/logout',
                 load: () => {
-
+                    new logout(this.openRoute.bind(this));
                 }
             },
             {
@@ -50,6 +53,7 @@ export class Router {
                 title: 'Доходы и расходы',
                 layout: 'templates/layout.html',
                 content: 'templates/income-and-expenses/income-and-expenses-list.html',
+                authorization: true,
                 load: () => {
 
                 }
@@ -59,6 +63,7 @@ export class Router {
                 title: 'Редактирование дохода/расхода',
                 layout: 'templates/layout.html',
                 content: 'templates/income-and-expenses/income-and-expenses-edit.html',
+                authorization: true,
                 load: () => {
 
                 }
@@ -68,6 +73,7 @@ export class Router {
                 title: 'Создание дохода/расхода',
                 layout: 'templates/layout.html',
                 content: 'templates/income-and-expenses/income-and-expenses-create.html',
+                authorization: true,
                 load: () => {
 
                 }
@@ -77,6 +83,7 @@ export class Router {
                 title: 'Доходы',
                 layout: 'templates/layout.html',
                 content: 'templates/income/income-category-list.html',
+                authorization: true,
                 load: () => {
 
                 }
@@ -86,6 +93,7 @@ export class Router {
                 title: 'Создание категории доходов',
                 layout: 'templates/layout.html',
                 content: 'templates/income/income-category-create.html',
+                authorization: true,
                 load: () => {
 
                 }
@@ -95,6 +103,7 @@ export class Router {
                 title: 'Редактирование категории доходов',
                 layout: 'templates/layout.html',
                 content: 'templates/income/income-category-edit.html',
+                authorization: true,
                 load: () => {
 
                 }
@@ -104,6 +113,7 @@ export class Router {
                 title: 'Расходы',
                 layout: 'templates/layout.html',
                 content: 'templates/expenses/expenses-category-list.html',
+                authorization: true,
                 load: () => {
 
                 }
@@ -113,6 +123,7 @@ export class Router {
                 title: 'Создание категории расходов',
                 layout: 'templates/layout.html',
                 content: 'templates/expenses/expenses-category-create.html',
+                authorization: true,
                 load: () => {
 
                 }
@@ -122,6 +133,7 @@ export class Router {
                 title: 'Редактирование категории расходов',
                 layout: 'templates/layout.html',
                 content: 'templates/expenses/expenses-category-edit.html',
+                authorization: true,
                 load: () => {
 
                 }
@@ -190,6 +202,13 @@ export class Router {
         const newRouteObject = this.routers.find(item => item.route === path);
 
         if (newRouteObject) {
+            if(newRouteObject.authorization){
+                if(!StorageUtils.getAuthInfo(StorageUtils.accessTokenKey) || !StorageUtils.getAuthInfo(StorageUtils.refreshTokenKey)){
+                    this.openRoute('/login');
+                    return;
+                }
+            }
+
             if (newRouteObject.title) {
                 this.titleElement.innerText = newRouteObject.title;
             }
@@ -200,8 +219,11 @@ export class Router {
                 this.contentElement.innerHTML = await layout.text();
                 contentBlock = document.getElementById('content-layout');
             }
-            const content = await fetch(newRouteObject.content);
-            contentBlock.innerHTML = await content.text();
+
+            if(newRouteObject.content){
+                const content = await fetch(newRouteObject.content);
+                contentBlock.innerHTML = await content.text();
+            }
 
             if (newRouteObject.styles && newRouteObject.styles.length > 0) {
                 newRouteObject.styles.forEach(fileHref => FileUtils.loadPageStyle(fileHref))

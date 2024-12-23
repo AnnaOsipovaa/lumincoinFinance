@@ -1,5 +1,6 @@
 import config from '../config/config.js';
 import { HttpUtils } from '../utils/http-utils.js';
+import { StorageUtils } from '../utils/storage-utils.js';
 
 export class Auth{
     static async login(data){ 
@@ -29,5 +30,42 @@ export class Auth{
         }
 
         return signup.response;
+    }
+
+    static async logout(data){
+        await HttpUtils.responce(config.api + '/logout', 'POST', data);
+    }
+
+    static async refresh(){
+        let result = false;
+        const refreshToken = StorageUtils.getAuthInfo(StorageUtils.refreshTokenKey);
+
+        if (refreshToken) {
+            const response = await fetch(config.api + '/refresh', {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    refreshToken: refreshToken
+                })
+            });
+
+            if (response.status === 200) {
+                const tokensInfo = await response.json();
+
+                if (tokensInfo && !tokensInfo.error) {
+                    StorageUtils.setAuthInfo(tokensInfo.tokens.accessToken, tokensInfo.tokens.refreshToken);
+                    result = true;
+                }
+            }
+        }
+
+        if(!result){
+            StorageUtils.removeAuthInfo();
+        }
+
+        return result;
     }
 }

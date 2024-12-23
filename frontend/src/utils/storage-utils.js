@@ -4,6 +4,7 @@ export class StorageUtils {
     static userInfoKey = 'userInfo';
 
     static setAuthInfo(accessToken, refreshToken, userInfo = null) {
+        debugger
         localStorage.setItem(this.accessTokenKey, accessToken);
         localStorage.setItem(this.refreshTokenKey, refreshToken);
         if (userInfo) {
