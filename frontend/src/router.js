@@ -28,7 +28,7 @@ export class Router {
                 title: 'Авторизация',
                 content: 'templates/auth/login.html',
                 load: () => {
-                    new Login();
+                    new Login(this.openRoute.bind(this));
                 },
             },
             {
@@ -36,13 +36,13 @@ export class Router {
                 title: 'Регистрация',
                 content: 'templates/auth/signup.html',
                 load: () => {
-                    new Signup();
+                    new Signup(this.openRoute.bind(this));
                 },
             },
             {
                 route: '/logout',
                 load: () => {
-                    
+
                 }
             },
             {
@@ -51,7 +51,7 @@ export class Router {
                 layout: 'templates/layout.html',
                 content: 'templates/income-and-expenses/income-and-expenses-list.html',
                 load: () => {
-                    
+
                 }
             },
             {
@@ -60,7 +60,7 @@ export class Router {
                 layout: 'templates/layout.html',
                 content: 'templates/income-and-expenses/income-and-expenses-edit.html',
                 load: () => {
-                    
+
                 }
             },
             {
@@ -69,7 +69,7 @@ export class Router {
                 layout: 'templates/layout.html',
                 content: 'templates/income-and-expenses/income-and-expenses-create.html',
                 load: () => {
-                    
+
                 }
             },
             {
@@ -78,7 +78,7 @@ export class Router {
                 layout: 'templates/layout.html',
                 content: 'templates/income/income-category-list.html',
                 load: () => {
-                    
+
                 }
             },
             {
@@ -87,7 +87,7 @@ export class Router {
                 layout: 'templates/layout.html',
                 content: 'templates/income/income-category-create.html',
                 load: () => {
-                    
+
                 }
             },
             {
@@ -96,7 +96,7 @@ export class Router {
                 layout: 'templates/layout.html',
                 content: 'templates/income/income-category-edit.html',
                 load: () => {
-                    
+
                 }
             },
             {
@@ -105,16 +105,16 @@ export class Router {
                 layout: 'templates/layout.html',
                 content: 'templates/expenses/expenses-category-list.html',
                 load: () => {
-                    
+
                 }
             },
-            { 
+            {
                 route: '/expenses-category-create',
                 title: 'Создание категории расходов',
                 layout: 'templates/layout.html',
                 content: 'templates/expenses/expenses-category-create.html',
                 load: () => {
-                    
+
                 }
             },
             {
@@ -123,7 +123,7 @@ export class Router {
                 layout: 'templates/layout.html',
                 content: 'templates/expenses/expenses-category-edit.html',
                 load: () => {
-                    
+
                 }
             },
         ]
@@ -166,14 +166,24 @@ export class Router {
         await this.activateRoute(null, currenrRoute);
     }
 
+    deactivationOldRoute(route) {
+        const oldRouteObject = this.routers.find(item => item.route === route);
+        if (oldRouteObject.styles && oldRouteObject.styles.length > 0) {
+            oldRouteObject.styles.forEach(item => {
+                document.querySelector(`link[href="/styles/${item}"]`).remove()
+            });
+        }
+
+        if (oldRouteObject.scripts && oldRouteObject.scripts.length > 0) {
+            oldRouteObject.scripts.forEach(item => {
+                document.querySelector(`script[src="/js/${item}"]`).remove()
+            });
+        }
+    }
+
     async activateRoute(e, oldRoute = null) {
         if (oldRoute) {
-            const oldRouteObject = this.routers.find(item => item.route === oldRoute);
-            if (oldRouteObject.styles && oldRouteObject.styles.length > 0) {
-                oldRouteObject.styles.forEach(item => {
-                    document.querySelector(`link[href="/styles/${item}"]`).remove()
-                });
-            }
+            this.deactivationOldRoute(oldRoute);
         }
 
         const path = (window.location.pathname).split('&')[0];
