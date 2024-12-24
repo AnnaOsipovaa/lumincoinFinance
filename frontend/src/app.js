@@ -5,7 +5,6 @@ import * as bootstrap from 'bootstrap';
 
 class App{
     constructor(){
-        Auth.refresh();
         new Router();
     }
 }

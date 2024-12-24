@@ -182,13 +182,18 @@ export class Router {
         const oldRouteObject = this.routers.find(item => item.route === route);
         if (oldRouteObject.styles && oldRouteObject.styles.length > 0) {
             oldRouteObject.styles.forEach(item => {
-                document.querySelector(`link[href="/styles/${item}"]`).remove()
+                const file = document.querySelector(`link[href="/styles/${item}"]`);
+                if(file){
+                    file.remove();
+                }
             });
         }
-
         if (oldRouteObject.scripts && oldRouteObject.scripts.length > 0) {
             oldRouteObject.scripts.forEach(item => {
-                document.querySelector(`script[src="/js/${item}"]`).remove()
+                const file = document.querySelector(`script[src="/js/${item}"]`);
+                if(file){
+                    file.remove();
+                }
             });
         }
     }

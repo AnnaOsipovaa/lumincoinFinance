@@ -8,7 +8,6 @@ export class logout {
     }
 
     async logout() {
-        debugger
         await Auth.logout({
             refreshToken: StorageUtils.getAuthInfo(StorageUtils.refreshTokenKey)
         });
