@@ -4,7 +4,7 @@ import { StorageUtils } from '../utils/storage-utils.js';
 
 export class Auth{
     static async login(data){ 
-        let login = await HttpUtils.responce(config.api + '/login', 'POST', data);
+        let login = await HttpUtils.responce(config.api + '/login', false, 'POST', data);
 
         if (login.error || 
             !login.response.tokens ||
@@ -18,7 +18,7 @@ export class Auth{
     }
     
     static async signup(data){ 
-        let signup = await HttpUtils.responce(config.api + '/signup', 'POST', data);
+        let signup = await HttpUtils.responce(config.api + '/signup', false, 'POST', data);
 
         if (signup.error || 
             !signup.response.user ||
@@ -33,7 +33,7 @@ export class Auth{
     }
 
     static async logout(data){
-        await HttpUtils.responce(config.api + '/logout', 'POST', data);
+        await HttpUtils.responce(config.api + '/logout', false, 'POST', data);
     }
 
     static async refresh(){

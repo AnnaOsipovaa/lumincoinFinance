@@ -1,16 +1,17 @@
-import { elements } from "chart.js";
 import { Login } from "./components/auth/login.js";
 import { Signup } from "./components/auth/signup.js";
 import { Main } from "./components/main.js";
 import { FileUtils } from "./utils/file-utils.js";
 import { logout } from "./components/auth/logout.js";
 import { StorageUtils } from "./utils/storage-utils.js";
+import { UserInfoUtils } from "./utils/user-info-utils.js";
 
 export class Router {
     constructor() {
 
         this.titleElement = document.getElementById('title');
-        this.contentElement = document.getElementById('content');
+        this.contentElement = document.getElementById('content');;
+        this.username = null;
 
         this.routers = [
             {
@@ -150,13 +151,13 @@ export class Router {
     }
 
     async clickHandler(e) {
-         
+
         let element = null;
         if (e.target.nodeName === 'A') {
             element = e.target;
-        }else{
+        } else {
             if (e.target.parentNode.nodeName === 'A') {
-                element =  e.target.parentNode;
+                element = e.target.parentNode;
             }
         }
 
@@ -183,7 +184,7 @@ export class Router {
         if (oldRouteObject.styles && oldRouteObject.styles.length > 0) {
             oldRouteObject.styles.forEach(item => {
                 const file = document.querySelector(`link[href="/styles/${item}"]`);
-                if(file){
+                if (file) {
                     file.remove();
                 }
             });
@@ -191,7 +192,7 @@ export class Router {
         if (oldRouteObject.scripts && oldRouteObject.scripts.length > 0) {
             oldRouteObject.scripts.forEach(item => {
                 const file = document.querySelector(`script[src="/js/${item}"]`);
-                if(file){
+                if (file) {
                     file.remove();
                 }
             });
@@ -207,8 +208,8 @@ export class Router {
         const newRouteObject = this.routers.find(item => item.route === path);
 
         if (newRouteObject) {
-            if(newRouteObject.authorization){
-                if(!StorageUtils.getAuthInfo(StorageUtils.accessTokenKey) || !StorageUtils.getAuthInfo(StorageUtils.refreshTokenKey)){
+            if (newRouteObject.authorization) {
+                if (!StorageUtils.getAuthInfo(StorageUtils.accessTokenKey) || !StorageUtils.getAuthInfo(StorageUtils.refreshTokenKey)) {
                     this.openRoute('/login');
                     return;
                 }
@@ -223,9 +224,16 @@ export class Router {
                 const layout = await fetch(newRouteObject.layout);
                 this.contentElement.innerHTML = await layout.text();
                 contentBlock = document.getElementById('content-layout');
+
+                if (!this.username) {
+                    this.username = UserInfoUtils.getUserName();
+                }
+                document.getElementById('username').innerText = this.username;
+
+                document.getElementById('userBalance').innerText = await UserInfoUtils.getUserBalance() + '$';
             }
 
-            if(newRouteObject.content){
+            if (newRouteObject.content) {
                 const content = await fetch(newRouteObject.content);
                 contentBlock.innerHTML = await content.text();
             }
