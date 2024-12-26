@@ -1,98 +1,8 @@
-<div class="w-100 container px-3 py-4 px-lg-5 px-sm-5 py-lg-5 mt-5 mt-lg-0">
+<div class="w-100 container px-2 py-4 px-lg-3 px-sm-5 py-lg-5 mt-5 mt-lg-0">
     <h1 class="text-primary-emphasis mb-3 mb-xl-4">Расходы</h1>
-    <div class="row gx-3 gy-3">
-        <div class="col-12 col-xl-4">
-            <div class="p-3 border rounded-3">
-                <h3 class="mb-3">Еда</h3>
-                <div class="d-flex">
-                    <a href="/expenses-category-edit" class="btn btn-primary px-3 me-2">Редактировать</a>
-                    <button type="button" class="btn btn-danger px-3" data-bs-toggle="modal" data-bs-target=".modal">Удалить</button>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-xl-4">
-            <div class="p-3 border rounded-3">
-                <h3 class="mb-3">Жильё</h3>
-                <div class="d-flex">
-                    <a href="/expenses-category-edit" class="btn btn-primary px-3 me-2">Редактировать</a>
-                    <button type="button" class="btn btn-danger px-3" data-bs-toggle="modal" data-bs-target=".modal">Удалить</button>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-xl-4">
-            <div class="p-3 border rounded-3">
-                <h3 class="mb-3">Здоровье</h3>
-                <div class="d-flex">
-                    <a href="/expenses-category-edit" class="btn btn-primary px-3 me-2">Редактировать</a>
-                    <button type="button" class="btn btn-danger px-3" data-bs-toggle="modal" data-bs-target=".modal">Удалить</button>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-xl-4">
-            <div class="p-3 border rounded-3">
-                <h3 class="mb-3">Кафе</h3>
-                <div class="d-flex">
-                    <a href="/expenses-category-edit" class="btn btn-primary px-3 me-2">Редактировать</a>
-                    <button type="button" class="btn btn-danger px-3" data-bs-toggle="modal" data-bs-target=".modal">Удалить</button>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-xl-4">
-            <div class="p-3 border rounded-3">
-                <h3 class="mb-3">Авто</h3>
-                <div class="d-flex">
-                    <a href="/expenses-category-edit" class="btn btn-primary px-3 me-2">Редактировать</a>
-                    <button type="button" class="btn btn-danger px-3" data-bs-toggle="modal" data-bs-target=".modal">Удалить</button>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-xl-4">
-            <div class="p-3 border rounded-3">
-                <h3 class="mb-3">Кафе</h3>
-                <div class="d-flex">
-                    <a href="/expenses-category-edit" class="btn btn-primary px-3 me-2">Редактировать</a>
-                    <button type="button" class="btn btn-danger px-3" data-bs-toggle="modal" data-bs-target=".modal">Удалить</button>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-xl-4">
-            <div class="p-3 border rounded-3">
-                <h3 class="mb-3">Одежда</h3>
-                <div class="d-flex">
-                    <a href="/expenses-category-edit" class="btn btn-primary px-3 me-2">Редактировать</a>
-                    <button type="button" class="btn btn-danger px-3" data-bs-toggle="modal" data-bs-target=".modal">Удалить</button>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-xl-4">
-            <div class="p-3 border rounded-3">
-                <h3 class="mb-3">Развлечения</h3>
-                <div class="d-flex">
-                    <a href="/expenses-category-edit" class="btn btn-primary px-3 me-2">Редактировать</a>
-                    <button type="button" class="btn btn-danger px-3" data-bs-toggle="modal" data-bs-target=".modal">Удалить</button>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-xl-4">
-            <div class="p-3 border rounded-3">
-                <h3 class="mb-3">Счета</h3>
-                <div class="d-flex">
-                    <a href="/expenses-category-edit" class="btn btn-primary px-3 me-2">Редактировать</a>
-                    <button type="button" class="btn btn-danger px-3" data-bs-toggle="modal" data-bs-target=".modal">Удалить</button>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-xl-4">
-            <div class="p-3 border rounded-3">
-                <h3 class="mb-3">Спорт</h3>
-                <div class="d-flex">
-                    <a href="/expenses-category-edit" class="btn btn-primary px-3 me-2">Редактировать</a>
-                    <button type="button" class="btn btn-danger px-3" data-bs-toggle="modal" data-bs-target=".modal">Удалить</button>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-xl-4">
-            <a href="expenses-category-create.html" class="d-block w-100 h-100 border p-5 rounded-3 d-flex align-items-center justify-content-center">
+    <div class="row gx-3 gy-3" id="categories-list">
+        <div class="col-12 col-xl-4" id="add-categories">
+            <a href="/expenses-category-create" class="d-block w-100 h-100 border p-5 rounded-3 d-flex align-items-center justify-content-center">
                 <img src="./image/icon-plus.png" alt="">
             </a>
         </div>
@@ -107,8 +17,8 @@
                 Вы действительно хотите удалить категорию? 
             </div>
             <div class="text-center">
-                <button type="button" class="btn btn-success me-2">Да, удалить</button>
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Не удалять</button>
+                <button type="button" class="btn btn-success me-2" id="confirmation-delete-btn_true">Да, удалить</button>
+                <button type="button" class="btn btn-danger" id="confirmation-delete-btn_false" data-bs-dismiss="modal">Не удалять</button>
             </div>
         </div>
         </div>

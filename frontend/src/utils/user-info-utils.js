@@ -15,8 +15,8 @@ export class UserInfoUtils {
     static async getUserBalance() {
         let result = await HttpUtils.responce(config.api + '/balance', true);
 
-        if (!result.error && result.response && result.response.hasOwnProperty('balance')) {
-            return result.response.balance;
+        if (!result.error && result.content && result.content.hasOwnProperty('balance')) {
+            return result.content.balance;
         }
     }
 }

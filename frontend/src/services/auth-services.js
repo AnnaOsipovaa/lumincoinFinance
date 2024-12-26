@@ -7,29 +7,29 @@ export class Auth{
         let login = await HttpUtils.responce(config.api + '/login', false, 'POST', data);
 
         if (login.error || 
-            !login.response.tokens ||
-            !login.response.tokens.accessToken || 
-            !login.response.tokens.refreshToken || 
-            !login.response.user) {
+            !login.content.tokens ||
+            !login.content.tokens.accessToken || 
+            !login.content.tokens.refreshToken || 
+            !login.content.user) {
             return false;
         }
 
-        return login.response;
+        return login.content;
     }
     
     static async signup(data){ 
         let signup = await HttpUtils.responce(config.api + '/signup', false, 'POST', data);
 
         if (signup.error || 
-            !signup.response.user ||
-            !signup.response.user.id || 
-            !signup.response.user.email || 
-            !signup.response.user.name ||
-            !signup.response.user.lastName) {
+            !signup.content.user ||
+            !signup.content.user.id || 
+            !signup.content.user.email || 
+            !signup.content.user.name ||
+            !signup.content.user.lastName) {
             return false;
         }
 
-        return signup.response;
+        return signup.content;
     }
 
     static async logout(data){

@@ -2,9 +2,11 @@ import { Login } from "./components/auth/login.js";
 import { Signup } from "./components/auth/signup.js";
 import { Main } from "./components/main.js";
 import { FileUtils } from "./utils/file-utils.js";
-import { logout } from "./components/auth/logout.js";
+import { Logout } from "./components/auth/logout.js";
 import { StorageUtils } from "./utils/storage-utils.js";
 import { UserInfoUtils } from "./utils/user-info-utils.js";
+import { CategoryIncomeList } from "./components/income/category-income-list.js";
+import { CategoryExpensList } from "./components/expense/category-expense-list.js";
 
 export class Router {
     constructor() {
@@ -46,7 +48,7 @@ export class Router {
             {
                 route: '/logout',
                 load: () => {
-                    new logout(this.openRoute.bind(this));
+                    new Logout(this.openRoute.bind(this));
                 }
             },
             {
@@ -86,7 +88,7 @@ export class Router {
                 content: 'templates/income/income-category-list.html',
                 authorization: true,
                 load: () => {
-
+                    new CategoryIncomeList(this.openRoute.bind(this));
                 }
             },
             {
@@ -116,7 +118,7 @@ export class Router {
                 content: 'templates/expenses/expenses-category-list.html',
                 authorization: true,
                 load: () => {
-
+                    new CategoryExpensList(this.openRoute.bind(this));
                 }
             },
             {

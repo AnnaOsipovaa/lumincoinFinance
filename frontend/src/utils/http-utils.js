@@ -6,7 +6,7 @@ export class HttpUtils {
         const result = {
             error: false,
             redirect: false,
-            response: null
+            content: null
         }
 
         const params = {
@@ -32,7 +32,7 @@ export class HttpUtils {
         let response = null;
         try {
             response = await fetch(url, params);
-            result.response = await response.json();
+            result.content = await response.json();
         } catch (error) {
             result.error = true;
         }
