@@ -6,13 +6,14 @@ export class CategoryIncomeList {
         this.getCategories();
 
         this.confirmationDeleteBtnElement = document.getElementById('confirmation-delete-btn_true');
-        this.confirmationDeleteBtnElement.addEventListener('click', this.deleteCategory.bind(this));
+        
         document.getElementById('confirmation-delete-btn_false').addEventListener('click', this.cancelDelete.bind(this));
     }
 
     async getCategories() {
         const response = await CategoryIncomeServices.getCategories();
         if (response.error || response.redirect) {
+            alert('Ошибка при получении списка категорий.')
             return response.redirect ? this.openRoute(response.redirect) : null;
         }
         this.showCategories(response.content);
@@ -45,7 +46,7 @@ export class CategoryIncomeList {
             categoryDeleteButtonElement.setAttribute('data-bs-toggle', 'modal');
             categoryDeleteButtonElement.setAttribute('data-bs-target', '.modal');
             categoryDeleteButtonElement.setAttribute('data-id', element.id);
-            categoryDeleteButtonElement.addEventListener('click', this.setIdForCategoryDeleted.bind(this));
+            categoryDeleteButtonElement.addEventListener('click', this.setLinkForCategoryDeleted.bind(this));
             categoryDeleteButtonElement.innerText = 'Удалить';
 
             categoryActionsElement.appendChild(categoryEditButtonElement);
@@ -57,15 +58,11 @@ export class CategoryIncomeList {
         });
     }
 
-    cancelDelete(){
-        this.confirmationDeleteBtnElement.removeAttribute('data-id');
+    cancelDelete() {
+        this.confirmationDeleteBtnElement.href = '';
     }
 
-    setIdForCategoryDeleted(e){
-        this.confirmationDeleteBtnElement.setAttribute('data-id', e.target.getAttribute('data-id'));
-    }
-    
-    deleteCategory(e){
-        console.log(e.target.getAttribute('data-id'));
+    setLinkForCategoryDeleted(e) {
+        this.confirmationDeleteBtnElement.href = '/income-category-delete?id=' + e.target.getAttribute('data-id');
     }
 }

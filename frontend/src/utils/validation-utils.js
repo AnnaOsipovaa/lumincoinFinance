@@ -1,7 +1,7 @@
 export class ValidationUtils{
     static validateForm(validations){
         let isValid = true;
-
+   
         validations.forEach(item => {
             if (!ValidationUtils.validateField(item.element, item.options)) {
                 isValid = false;
@@ -18,6 +18,8 @@ export class ValidationUtils{
                 condition = element.value && element.value.match(options.pattern);
             } else if (options.hasOwnProperty('compareTo')) {
                 condition = element.value && element.value === options.compareTo;
+            } else if (options.hasOwnProperty('notEqualTo')) {
+                condition = element.value && element.value !== options.notEqualTo;
             }
         }
 

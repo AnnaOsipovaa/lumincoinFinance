@@ -7,6 +7,9 @@ import { StorageUtils } from "./utils/storage-utils.js";
 import { UserInfoUtils } from "./utils/user-info-utils.js";
 import { CategoryIncomeList } from "./components/income/category-income-list.js";
 import { CategoryExpensList } from "./components/expense/category-expense-list.js";
+import { CategoryIncomeEdit } from "./components/income/category-income-edit.js";
+import { CategoryIncomeCreate } from "./components/income/category-income-create.js";
+import { CategoryIncomeDelete } from "./components/income/category-income-delete.js";
 
 export class Router {
     constructor() {
@@ -98,7 +101,14 @@ export class Router {
                 content: 'templates/income/income-category-create.html',
                 authorization: true,
                 load: () => {
-
+                    new CategoryIncomeCreate(this.openRoute.bind(this));
+                }
+            },
+            {
+                route: '/income-category-delete',
+                authorization: true,
+                load: () => {
+                    new CategoryIncomeDelete(this.openRoute.bind(this));
                 }
             },
             {
@@ -108,7 +118,7 @@ export class Router {
                 content: 'templates/income/income-category-edit.html',
                 authorization: true,
                 load: () => {
-
+                    new CategoryIncomeEdit(this.openRoute.bind(this));
                 }
             },
             {
@@ -128,7 +138,7 @@ export class Router {
                 content: 'templates/expenses/expenses-category-create.html',
                 authorization: true,
                 load: () => {
-
+                     
                 }
             },
             {
