@@ -1,7 +1,7 @@
-import { CategoryIncomeServices } from "../../services/category-income-services.js";
+import { CategoryExpensesServices } from "../../services/category-expenses-services.js";
 import { URLUtils } from "../../utils/url-utils.js";
 
-export class CategoryIncomeDelete {
+export class CategoryExpensesDelete {
     constructor(openRoute) {
         this.openRoute = openRoute;
 
@@ -15,11 +15,11 @@ export class CategoryIncomeDelete {
     }
 
     async delete(id) {
-        const response = await CategoryIncomeServices.deleteCategory(id);
+        const response = await CategoryExpensesServices.deleteCategory(id);
         if (response.error || response.redirect) {
             alert('Ошибка при удалении категории.')
             return response.redirect ? this.openRoute(response.redirect) : null;
         }
-        this.openRoute('/income-category-list');
+        this.openRoute('/expenses-category-list');
     }
 }

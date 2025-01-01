@@ -10,6 +10,9 @@ import { CategoryExpensList } from "./components/expense/category-expense-list.j
 import { CategoryIncomeEdit } from "./components/income/category-income-edit.js";
 import { CategoryIncomeCreate } from "./components/income/category-income-create.js";
 import { CategoryIncomeDelete } from "./components/income/category-income-delete.js";
+import { CategoryExpenseCreate } from "./components/expense/category-expense-create.js";
+import { CategoryExpensesDelete } from "./components/expense/category-expense-delete.js";
+import { CategoryExpensesEdit } from "./components/expense/category-expense-edit.js";
 
 export class Router {
     constructor() {
@@ -138,7 +141,7 @@ export class Router {
                 content: 'templates/expenses/expenses-category-create.html',
                 authorization: true,
                 load: () => {
-                     
+                    new CategoryExpenseCreate(this.openRoute.bind(this));
                 }
             },
             {
@@ -148,7 +151,13 @@ export class Router {
                 content: 'templates/expenses/expenses-category-edit.html',
                 authorization: true,
                 load: () => {
-
+                    new CategoryExpensesEdit(this.openRoute.bind(this));
+                }
+            }, {
+                route: '/expenses-category-delete',
+                authorization: true,
+                load: () => {
+                    new CategoryExpensesDelete(this.openRoute.bind(this));
                 }
             },
         ]
