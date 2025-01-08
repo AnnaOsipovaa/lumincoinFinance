@@ -2,7 +2,9 @@ import Chart from 'chart.js/auto';
 import { OperationsServices } from '../services/operations-services';
 
 export class Main {
-    constructor() {
+    constructor(openRoute) {
+        this.openRoute = openRoute;
+
         this.noOperationsTitle = document.getElementById('no-operations-title');
         this.diagramsIncomeBlockElement = document.getElementById('block-income');
         this.diagramsExpensesBlockElement = document.getElementById('block-expenses');
@@ -60,7 +62,7 @@ export class Main {
 
         const response = await OperationsServices.getOperations(params);
         if (response.error || response.redirect) {
-            alert('Ошибка при получении списка доходов и рсходов.')
+            alert('Ошибка при получении списка доходов и расходов.')
             return response.redirect ? this.openRoute(response.redirect) : null;
         }
 

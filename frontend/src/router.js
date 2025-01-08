@@ -34,7 +34,7 @@ export class Router {
                 content: 'templates/main.html',
                 authorization: true,
                 load: () => {
-                    new Main();
+                    new Main(this.openRoute.bind(this));
                 },
                 styles: [
                     'main.css'

@@ -52,7 +52,7 @@ export class OperationsList {
 
         const response = await OperationsServices.getOperations(params);
         if (response.error || response.redirect) {
-            alert('Ошибка при получении списка доходов и рсходов.')
+            alert('Ошибка при получении списка доходов и расходов.')
             return response.redirect ? this.openRoute(response.redirect) : null;
         }
 
