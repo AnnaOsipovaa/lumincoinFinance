@@ -1,4 +1,4 @@
-import { CategoryExpensesServices } from "../../services/category-expenses-services.js";
+import { CategoryExpenseServices } from "../../services/category-expenses-services.js";
 import { ValidationUtils } from "../../utils/validation-utils.js";
 
 export class CategoryExpenseCreate {
@@ -15,7 +15,7 @@ export class CategoryExpenseCreate {
 
     async create() {
         if (ValidationUtils.validateForm(this.validations)) { 
-            const response = await CategoryExpensesServices.createCategory({
+            const response = await CategoryExpenseServices.createCategory({
                 title: this.inputNameCategoryElement.value
             });
 

@@ -1,4 +1,4 @@
-import { CategoryExpensesServices } from "../../services/category-expenses-services";
+import { CategoryExpenseServices } from "../../services/category-expenses-services";
 
 export class CategoryExpensList {
     constructor(openRoute) {
@@ -11,7 +11,7 @@ export class CategoryExpensList {
     }
 
     async getCategories() {
-        const response = await CategoryExpensesServices.getCategories();
+        const response = await CategoryExpenseServices.getCategories();
         if (response.error || response.redirect) {
             alert('Ошибка при получении списка категорий.')
             return response.redirect ? this.openRoute(response.redirect) : null;

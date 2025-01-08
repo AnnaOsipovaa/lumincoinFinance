@@ -1,4 +1,4 @@
-import { CategoryExpensesServices } from "../../services/category-expenses-services";
+import { CategoryExpenseServices } from "../../services/category-expenses-services";
 import { URLUtils } from "../../utils/url-utils";
 import { ValidationUtils } from "../../utils/validation-utils";
 
@@ -20,7 +20,7 @@ export class CategoryExpensesEdit {
     }
 
     async getCategory(id) {
-        const response = await CategoryExpensesServices.getCategory(id);
+        const response = await CategoryExpenseServices.getCategory(id);
         if (response.error || response.redirect) {
             return response.redirect ? this.openRoute(response.redirect) : null;
         }
@@ -34,7 +34,7 @@ export class CategoryExpensesEdit {
         ];
 
         if (ValidationUtils.validateForm(this.validations)) {
-            const response = await CategoryExpensesServices.editCategory(this.category.id, {
+            const response = await CategoryExpenseServices.editCategory(this.category.id, {
                 title: this.nameCategoryElement.value
             });
 

@@ -13,6 +13,11 @@ import { CategoryIncomeDelete } from "./components/income/category-income-delete
 import { CategoryExpenseCreate } from "./components/expense/category-expense-create.js";
 import { CategoryExpensesDelete } from "./components/expense/category-expense-delete.js";
 import { CategoryExpensesEdit } from "./components/expense/category-expense-edit.js";
+import { OperationsList } from "./components/operations/operations-list.js";
+import { OperationsCreate } from "./components/operations/operations-create.js";
+import { OperationsDelete } from "./components/operations/operations-delete.js";
+import { OperationsEdit } from "./components/operations/operations-edit.js";
+import { LayoutMenuUtils } from "./utils/layout-menu-utils.js";
 
 export class Router {
     constructor() {
@@ -58,33 +63,43 @@ export class Router {
                 }
             },
             {
-                route: '/income-and-expenses-list',
+                route: '/operations-list',
                 title: 'Доходы и расходы',
                 layout: 'templates/layout.html',
-                content: 'templates/income-and-expenses/income-and-expenses-list.html',
+                content: 'templates/operations/operations-list.html',
                 authorization: true,
                 load: () => {
-
-                }
+                    new OperationsList(this.openRoute.bind(this));
+                },
+                styles: [
+                    'main.css'
+                ]
             },
             {
-                route: '/income-and-expenses-edit',
+                route: '/operations-edit',
                 title: 'Редактирование дохода/расхода',
                 layout: 'templates/layout.html',
-                content: 'templates/income-and-expenses/income-and-expenses-edit.html',
+                content: 'templates/operations/operations-edit.html',
                 authorization: true,
                 load: () => {
-
+                    new OperationsEdit(this.openRoute.bind(this));
                 }
             },
             {
-                route: '/income-and-expenses-create',
-                title: 'Создание дохода/расхода',
-                layout: 'templates/layout.html',
-                content: 'templates/income-and-expenses/income-and-expenses-create.html',
+                route: '/operations-delete',
                 authorization: true,
                 load: () => {
-
+                    new OperationsDelete(this.openRoute.bind(this));
+                }
+            },
+            {
+                route: '/operations-create',
+                title: 'Создание дохода/расхода',
+                layout: 'templates/layout.html',
+                content: 'templates/operations/operations-create.html',
+                authorization: true,
+                load: () => {
+                    new OperationsCreate(this.openRoute.bind(this));
                 }
             },
             {
@@ -172,7 +187,6 @@ export class Router {
     }
 
     async clickHandler(e) {
-
         let element = null;
         if (e.target.nodeName === 'A') {
             element = e.target;
@@ -246,11 +260,12 @@ export class Router {
                 this.contentElement.innerHTML = await layout.text();
                 contentBlock = document.getElementById('content-layout');
 
+                LayoutMenuUtils.markMenu(path);
+
                 if (!this.username) {
                     this.username = UserInfoUtils.getUserName();
                 }
                 document.getElementById('username').innerText = this.username;
-
                 document.getElementById('userBalance').innerText = await UserInfoUtils.getUserBalance() + '$';
             }
 

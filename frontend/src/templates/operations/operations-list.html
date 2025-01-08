@@ -1,5 +1,9 @@
 <div class="w-100 container px-2 py-4 px-lg-3 px-sm-5 py-lg-5 mt-5 mt-lg-0">
-    <h1 class="text-primary-emphasis mb-3 mb-xl-4">Главная</h1>
+    <h1 class="text-primary-emphasis mb-3 mb-xl-4">Доходы и расходы </h1>
+    <div class="d-flex align-items-center mb-4 mb-lg-5">
+        <a href="/operations-create?type=income" class="btn btn-success me-2 px-3 py-1">Создать доход</a>
+        <a href="/operations-create?type=expense" class="btn btn-danger px-3 py-1">Создать расход</a>
+    </div>
     <div class="d-flex align-items-center flex-wrap mb-3 justify-content-center justify-content-md-start">
         <input type="radio" class="btn-check" name="interval" value="today" id="option1" autocomplete="off" checked>
         <label class="btn border-secondary btn-outline-secondary me-1 me-sm-3 fw-medium main__btn px-2 py-1 mb-1 mb-sm-2"
@@ -33,15 +37,36 @@
             </div>
         </div>
     </div>
-    <div class="row pt-4 pt-xl-5 justify-content-center justify-content-xl-start">
-        <h3 id="no-operations-title">Нет операций за указанный период</h3>
-        <div id="block-income" class="d-none col-12 col-xl-6 main__diagrams pe-0 pe-xl-5 mb-5 mb-xl-0">
-            <h3 class="text-center mb-3 text-primary-emphasis">Доходы</h3>
-            <canvas id="diagrams-income"></canvas>
-        </div>
-        <div id="block-expenses" class="d-none col-12 col-xl-6 main__diagrams ps-0 ps-xl-5">
-            <h3 class="text-center mb-3 text-primary-emphasis">Расходы</h3>
-            <canvas id="diagrams-expenses"></canvas>
+    <div class="table-responsive">
+        <table class="table text-center" id="table-operations">
+            <thead>
+                <tr>
+                <th scope="col">№ операции</th>
+                <th scope="col">Тип</th>
+                <th scope="col">Категория</th>
+                <th scope="col">Сумма</th>
+                <th scope="col">Дата</th>
+                <th scope="col">Комментарий</th>
+                <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody id="teble-body-operations"></tbody>
+        </table>
+    </div>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content p-3">
+            <div class="modal-body">
+                <div class="mb-3 fw-medium text-center lh-1">
+                    <div>Вы действительно хотите удалить операцию?</div> 
+                </div>
+                <div class="text-center">
+                    <a data-bs-dismiss="modal" class="btn btn-success me-2" id="confirmation-delete-btn_true">Да, удалить</a>
+                    <button type="button" class="btn btn-danger" id="confirmation-delete-btn_false" data-bs-dismiss="modal">Не удалять</button>
+                </div>
+            </div>
+            </div>
         </div>
     </div>
 </div>

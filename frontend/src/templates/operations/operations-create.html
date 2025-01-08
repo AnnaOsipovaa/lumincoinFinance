@@ -1,0 +1,21 @@
+<div class="w-100 container px-2 py-4 px-lg-3 px-sm-5 py-lg-5 mt-5 mt-lg-0">
+    <h1 class="text-primary-emphasis mb-3 mb-xl-4 lh-1">Создание дохода/расхода</h1>
+    <div class="row">
+        <form action="" class="col-12 col-sm-9 col-md-7 col-lg-6 col-xl-4">
+            <select class="form-select mb-2" aria-label="Default select example" aria-placeholder="Тип..." id="type-operation">
+                <option value="income">Доход</option>
+                <option value="expense">Расход</option>
+            </select>
+            <select class="form-select mb-2" aria-label="Default select example" aria-placeholder="Тип..." id="category-operation">
+                <option value="null" selected>Категория...</option>
+            </select>
+            <input type="number" class="form-control mb-2" placeholder="Сумма в $..."  id="summa-operation" min="0">
+            <input type="date" class="form-control mb-2" placeholder="Дата..." id="date-operation">
+            <input type="text" class="form-control mb-3" placeholder="Комментарий..." id="comment-operation">
+            <div class="text-center d-flex align-items-center mt-3">
+                <button type="button" class="btn btn-success me-2 px-3 py-1" id="create-operation">Создать</button>
+                <a href="/operations-list" class="btn btn-danger px-3 py-1">Отмена</a>
+            </div>
+        </form>
+    </div>
+</div>

@@ -20,7 +20,7 @@
                         <div class="ps-3 pe-3 pt-5">
                             <ul class="nav nav-pills flex-column">
                                 <li class="nav-item">
-                                    <a href="/" class="d-flex align-items-center nav-link active" aria-current="page">
+                                    <a href="/" class="d-flex align-items-center nav-link active layout__menu-link" aria-current="page">
                                         <div class="me-2 menu-item__icon">
                                             <svg class="menu-icon__svg" width="15" height="14" viewBox="0 0 15 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M1.5 12.3964V5.89644H2.5V12.3964C2.5 12.6726 2.72386 12.8964 3 12.8964H12C12.2761 12.8964 12.5 12.6726 12.5 12.3964V5.89644H13.5V12.3964C13.5 13.2249 12.8284 13.8964 12 13.8964H3C2.17157 13.8964 1.5 13.2249 1.5 12.3964Z" fill="white"/>
@@ -32,7 +32,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="/income-and-expenses-list" class="d-flex align-items-center nav-link">
+                                    <a href="/operations-list" class="d-flex align-items-center nav-link layout__menu-link">
                                         <div class="me-2 menu-item__icon">
                                             <svg class="menu-icon__svg" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M11 15C13.2091 15 15 13.2091 15 11C15 8.79086 13.2091 7 11 7C8.79086 7 7 8.79086 7 11C7 13.2091 8.79086 15 11 15ZM16 11C16 13.7614 13.7614 16 11 16C8.23858 16 6 13.7614 6 11C6 8.23858 8.23858 6 11 6C13.7614 6 16 8.23858 16 11Z" fill="#052C65"/>
@@ -48,14 +48,14 @@
                                     <div class="accordion" id="accordionExample">
                                         <div class="accordion-item border border-white overflow-hidden">
                                             <h2 class="accordion-header">
-                                                <button class="d-flex align-items-center justify-content-between btn accordion-button collapsed py-2 rounded-0 focus-ring menu-item__text" style="--bs-focus-ring-color: none" type="button" data-bs-toggle="collapse" data-bs-target="#category-list" aria-expanded="false" aria-controls="category-list">
+                                                <button id="accordion-btn" class="d-flex align-items-center justify-content-between btn accordion-button collapsed py-2 rounded-0 focus-ring menu-item__text shadow-none" style="--bs-focus-ring-color: none" type="button" data-bs-toggle="collapse" data-bs-target="#category-list" aria-expanded="false" aria-controls="category-list">
                                                     <span>Категории</span> 
                                                 </button>
                                             </h2>
                                             <div id="category-list" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                                                 <div class="accordion-body w-100 p-0">
-                                                    <a class="dropdown-item menu-item__text rounded-0 menu-item__text nav-link" href="/income-category-list">Доходы</a>
-                                                    <a class="dropdown-item menu-item__text rounded-0 menu-item__text nav-link" href="/expenses-category-list">Расходы</a>
+                                                    <a class="dropdown-item menu-item__text rounded-0 menu-item__text nav-link layout__menu-link accordion__menu-link" href="/income-category-list">Доходы</a>
+                                                    <a class="dropdown-item menu-item__text rounded-0 menu-item__text nav-link layout__menu-link accordion__menu-link" href="/expenses-category-list">Расходы</a>
                                                 </div>
                                             </div>
                                         </div>

@@ -1,7 +1,7 @@
 import config from '../config/config.js';
 import { HttpUtils } from '../utils/http-utils.js';
 
-export class CategoryExpensesServices{
+export class CategoryExpenseServices{
     static async getCategories(){
         const returnObject = {
             error: false,
