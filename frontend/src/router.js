@@ -1,16 +1,30 @@
-import { elements } from "chart.js";
 import { Login } from "./components/auth/login.js";
 import { Signup } from "./components/auth/signup.js";
 import { Main } from "./components/main.js";
 import { FileUtils } from "./utils/file-utils.js";
-import { logout } from "./components/auth/logout.js";
+import { Logout } from "./components/auth/logout.js";
 import { StorageUtils } from "./utils/storage-utils.js";
+import { UserInfoUtils } from "./utils/user-info-utils.js";
+import { CategoryIncomeList } from "./components/income/category-income-list.js";
+import { CategoryExpensList } from "./components/expense/category-expense-list.js";
+import { CategoryIncomeEdit } from "./components/income/category-income-edit.js";
+import { CategoryIncomeCreate } from "./components/income/category-income-create.js";
+import { CategoryIncomeDelete } from "./components/income/category-income-delete.js";
+import { CategoryExpenseCreate } from "./components/expense/category-expense-create.js";
+import { CategoryExpensesDelete } from "./components/expense/category-expense-delete.js";
+import { CategoryExpensesEdit } from "./components/expense/category-expense-edit.js";
+import { OperationsList } from "./components/operations/operations-list.js";
+import { OperationsCreate } from "./components/operations/operations-create.js";
+import { OperationsDelete } from "./components/operations/operations-delete.js";
+import { OperationsEdit } from "./components/operations/operations-edit.js";
+import { LayoutMenuUtils } from "./utils/layout-menu-utils.js";
 
 export class Router {
     constructor() {
 
         this.titleElement = document.getElementById('title');
-        this.contentElement = document.getElementById('content');
+        this.contentElement = document.getElementById('content');;
+        this.username = null;
 
         this.routers = [
             {
@@ -20,7 +34,7 @@ export class Router {
                 content: 'templates/main.html',
                 authorization: true,
                 load: () => {
-                    new Main();
+                    new Main(this.openRoute.bind(this));
                 },
                 styles: [
                     'main.css'
@@ -45,37 +59,47 @@ export class Router {
             {
                 route: '/logout',
                 load: () => {
-                    new logout(this.openRoute.bind(this));
+                    new Logout(this.openRoute.bind(this));
                 }
             },
             {
-                route: '/income-and-expenses-list',
+                route: '/operations-list',
                 title: 'Доходы и расходы',
                 layout: 'templates/layout.html',
-                content: 'templates/income-and-expenses/income-and-expenses-list.html',
+                content: 'templates/operations/operations-list.html',
                 authorization: true,
                 load: () => {
-
-                }
+                    new OperationsList(this.openRoute.bind(this));
+                },
+                styles: [
+                    'main.css'
+                ]
             },
             {
-                route: '/income-and-expenses-edit',
+                route: '/operations-edit',
                 title: 'Редактирование дохода/расхода',
                 layout: 'templates/layout.html',
-                content: 'templates/income-and-expenses/income-and-expenses-edit.html',
+                content: 'templates/operations/operations-edit.html',
                 authorization: true,
                 load: () => {
-
+                    new OperationsEdit(this.openRoute.bind(this));
                 }
             },
             {
-                route: '/income-and-expenses-create',
-                title: 'Создание дохода/расхода',
-                layout: 'templates/layout.html',
-                content: 'templates/income-and-expenses/income-and-expenses-create.html',
+                route: '/operations-delete',
                 authorization: true,
                 load: () => {
-
+                    new OperationsDelete(this.openRoute.bind(this));
+                }
+            },
+            {
+                route: '/operations-create',
+                title: 'Создание дохода/расхода',
+                layout: 'templates/layout.html',
+                content: 'templates/operations/operations-create.html',
+                authorization: true,
+                load: () => {
+                    new OperationsCreate(this.openRoute.bind(this));
                 }
             },
             {
@@ -85,7 +109,7 @@ export class Router {
                 content: 'templates/income/income-category-list.html',
                 authorization: true,
                 load: () => {
-
+                    new CategoryIncomeList(this.openRoute.bind(this));
                 }
             },
             {
@@ -95,7 +119,14 @@ export class Router {
                 content: 'templates/income/income-category-create.html',
                 authorization: true,
                 load: () => {
-
+                    new CategoryIncomeCreate(this.openRoute.bind(this));
+                }
+            },
+            {
+                route: '/income-category-delete',
+                authorization: true,
+                load: () => {
+                    new CategoryIncomeDelete(this.openRoute.bind(this));
                 }
             },
             {
@@ -105,7 +136,7 @@ export class Router {
                 content: 'templates/income/income-category-edit.html',
                 authorization: true,
                 load: () => {
-
+                    new CategoryIncomeEdit(this.openRoute.bind(this));
                 }
             },
             {
@@ -115,7 +146,7 @@ export class Router {
                 content: 'templates/expenses/expenses-category-list.html',
                 authorization: true,
                 load: () => {
-
+                    new CategoryExpensList(this.openRoute.bind(this));
                 }
             },
             {
@@ -125,7 +156,7 @@ export class Router {
                 content: 'templates/expenses/expenses-category-create.html',
                 authorization: true,
                 load: () => {
-
+                    new CategoryExpenseCreate(this.openRoute.bind(this));
                 }
             },
             {
@@ -135,7 +166,13 @@ export class Router {
                 content: 'templates/expenses/expenses-category-edit.html',
                 authorization: true,
                 load: () => {
-
+                    new CategoryExpensesEdit(this.openRoute.bind(this));
+                }
+            }, {
+                route: '/expenses-category-delete',
+                authorization: true,
+                load: () => {
+                    new CategoryExpensesDelete(this.openRoute.bind(this));
                 }
             },
         ]
@@ -150,13 +187,12 @@ export class Router {
     }
 
     async clickHandler(e) {
-         
         let element = null;
         if (e.target.nodeName === 'A') {
             element = e.target;
-        }else{
+        } else {
             if (e.target.parentNode.nodeName === 'A') {
-                element =  e.target.parentNode;
+                element = e.target.parentNode;
             }
         }
 
@@ -183,7 +219,7 @@ export class Router {
         if (oldRouteObject.styles && oldRouteObject.styles.length > 0) {
             oldRouteObject.styles.forEach(item => {
                 const file = document.querySelector(`link[href="/styles/${item}"]`);
-                if(file){
+                if (file) {
                     file.remove();
                 }
             });
@@ -191,7 +227,7 @@ export class Router {
         if (oldRouteObject.scripts && oldRouteObject.scripts.length > 0) {
             oldRouteObject.scripts.forEach(item => {
                 const file = document.querySelector(`script[src="/js/${item}"]`);
-                if(file){
+                if (file) {
                     file.remove();
                 }
             });
@@ -207,8 +243,8 @@ export class Router {
         const newRouteObject = this.routers.find(item => item.route === path);
 
         if (newRouteObject) {
-            if(newRouteObject.authorization){
-                if(!StorageUtils.getAuthInfo(StorageUtils.accessTokenKey) || !StorageUtils.getAuthInfo(StorageUtils.refreshTokenKey)){
+            if (newRouteObject.authorization) {
+                if (!StorageUtils.getAuthInfo(StorageUtils.accessTokenKey) || !StorageUtils.getAuthInfo(StorageUtils.refreshTokenKey)) {
                     this.openRoute('/login');
                     return;
                 }
@@ -223,9 +259,17 @@ export class Router {
                 const layout = await fetch(newRouteObject.layout);
                 this.contentElement.innerHTML = await layout.text();
                 contentBlock = document.getElementById('content-layout');
+
+                LayoutMenuUtils.markMenu(path);
+
+                if (!this.username) {
+                    this.username = UserInfoUtils.getUserName();
+                }
+                document.getElementById('username').innerText = this.username;
+                document.getElementById('userBalance').innerText = await UserInfoUtils.getUserBalance() + '$';
             }
 
-            if(newRouteObject.content){
+            if (newRouteObject.content) {
                 const content = await fetch(newRouteObject.content);
                 contentBlock.innerHTML = await content.text();
             }
