@@ -1,7 +1,7 @@
 export class FileUtils {
-    static loadPageScript(src) {
+    public static loadPageScript(src: string){
         return new Promise((res, rej) => {
-            const script = document.createElement('script');
+            const script: HTMLScriptElement = document.createElement('script');
             script.src = 'js/' + src;
             script.onload = () => res();
             script.onerror = () => rej();
@@ -9,8 +9,8 @@ export class FileUtils {
         })
     }
 
-    static loadPageStyle(href){
-        const link = document.createElement('link');
+    public static loadPageStyle(href: string){
+        const link: HTMLLinkElement = document.createElement('link');
         link.href = '/styles/' + href;
         link.type = 'text/css';
         link.rel = 'stylesheet';

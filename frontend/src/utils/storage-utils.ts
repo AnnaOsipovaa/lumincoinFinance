@@ -1,9 +1,11 @@
-export class StorageUtils {
-    static accessTokenKey = 'accessToken';
-    static refreshTokenKey = 'refreshToken';
-    static userInfoKey = 'userInfo';
+import { UserInfoType } from "../types/user-info.type";
 
-    static setAuthInfo(accessToken, refreshToken, userInfo = null) {
+export class StorageUtils {
+    public static accessTokenKey: string = 'accessToken';
+    public static refreshTokenKey: string = 'refreshToken';
+    public static userInfoKey: string = 'userInfo';
+
+    public static setAuthInfo(accessToken: string, refreshToken: string, userInfo?: UserInfoType) {
         localStorage.setItem(this.accessTokenKey, accessToken);
         localStorage.setItem(this.refreshTokenKey, refreshToken);
         if (userInfo) {
@@ -11,13 +13,13 @@ export class StorageUtils {
         }
     }
 
-    static removeAuthInfo() {
+    public static removeAuthInfo(): void {
         localStorage.removeItem(this.accessTokenKey);
         localStorage.removeItem(this.refreshTokenKey);
         localStorage.removeItem(this.userInfoKey);
     }
 
-    static getAuthInfo(key = null) {
+    public static getAuthInfo(key?: string): string | object | null {
         if (key) {
             switch (key) {
                 case this.accessTokenKey:
@@ -25,17 +27,20 @@ export class StorageUtils {
                 case this.refreshTokenKey:
                     return localStorage.getItem(this.refreshTokenKey);
                 case this.userInfoKey:
-                    return JSON.parse(localStorage.getItem(this.userInfoKey));
+                    const userInfo: string | null = localStorage.getItem(this.userInfoKey);
+                    if(userInfo){
+                        return JSON.parse(userInfo);
+                    }
                 default:
                     return null;
             }
         } else {
+            const userInfo: string | null = localStorage.getItem(this.userInfoKey);
             return {
                 [this.accessTokenKey]: localStorage.getItem(this.accessTokenKey),
                 [this.refreshTokenKey]: localStorage.getItem(this.refreshTokenKey),
-                [this.userInfoKey]: JSON.parse(localStorage.getItem(this.userInfoKey))
+                [this.userInfoKey]: userInfo ? JSON.parse(userInfo) : null
             }
         }
-
     }
 }

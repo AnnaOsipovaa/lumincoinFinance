@@ -1,25 +1,31 @@
-import { Login } from "./components/auth/login.js";
-import { Signup } from "./components/auth/signup.js";
-import { Main } from "./components/main.js";
-import { FileUtils } from "./utils/file-utils.js";
-import { Logout } from "./components/auth/logout.js";
-import { StorageUtils } from "./utils/storage-utils.js";
-import { UserInfoUtils } from "./utils/user-info-utils.js";
-import { CategoryIncomeList } from "./components/income/category-income-list.js";
-import { CategoryExpensList } from "./components/expense/category-expense-list.js";
-import { CategoryIncomeEdit } from "./components/income/category-income-edit.js";
-import { CategoryIncomeCreate } from "./components/income/category-income-create.js";
-import { CategoryIncomeDelete } from "./components/income/category-income-delete.js";
-import { CategoryExpenseCreate } from "./components/expense/category-expense-create.js";
-import { CategoryExpensesDelete } from "./components/expense/category-expense-delete.js";
-import { CategoryExpensesEdit } from "./components/expense/category-expense-edit.js";
-import { OperationsList } from "./components/operations/operations-list.js";
-import { OperationsCreate } from "./components/operations/operations-create.js";
-import { OperationsDelete } from "./components/operations/operations-delete.js";
-import { OperationsEdit } from "./components/operations/operations-edit.js";
-import { LayoutMenuUtils } from "./utils/layout-menu-utils.js";
+import { Login } from "./components/auth/login";
+import { Signup } from "./components/auth/signup";
+import { Main } from "./components/main";
+import { FileUtils } from "./utils/file-utils";
+import { Logout } from "./components/auth/logout";
+import { StorageUtils } from "./utils/storage-utils";
+import { UserInfoUtils } from "./utils/user-info-utils";
+import { CategoryIncomeList } from "./components/income/category-income-list";
+import { CategoryExpensList } from "./components/expense/category-expense-list";
+import { CategoryIncomeEdit } from "./components/income/category-income-edit";
+import { CategoryIncomeCreate } from "./components/income/category-income-create";
+import { CategoryIncomeDelete } from "./components/income/category-income-delete";
+import { CategoryExpenseCreate } from "./components/expense/category-expense-create";
+import { CategoryExpensesDelete } from "./components/expense/category-expense-delete";
+import { CategoryExpensesEdit } from "./components/expense/category-expense-edit";
+import { OperationsList } from "./components/operations/operations-list";
+import { OperationsCreate } from "./components/operations/operations-create";
+import { OperationsDelete } from "./components/operations/operations-delete";
+import { OperationsEdit } from "./components/operations/operations-edit";
+import { LayoutMenuUtils } from "./utils/layout-menu-utils";
+import { RouteType } from "./types/route.type";
 
 export class Router {
+    readonly titleElement: HTMLElement | null;
+    readonly contentElement: HTMLElement | null;
+    private username: string | null;
+    readonly routers: RouteType[];
+
     constructor() {
 
         this.titleElement = document.getElementById('title');
@@ -44,6 +50,7 @@ export class Router {
                 route: '/login',
                 title: 'Авторизация',
                 content: 'templates/auth/login.html',
+                authorization: false,
                 load: () => {
                     new Login(this.openRoute.bind(this));
                 },
@@ -52,12 +59,14 @@ export class Router {
                 route: '/signup',
                 title: 'Регистрация',
                 content: 'templates/auth/signup.html',
+                authorization: false,
                 load: () => {
                     new Signup(this.openRoute.bind(this));
                 },
             },
             {
                 route: '/logout',
+                authorization: false,
                 load: () => {
                     new Logout(this.openRoute.bind(this));
                 }
@@ -180,27 +189,30 @@ export class Router {
         this.initEvents();
     }
 
-    initEvents() {
+    private initEvents(): void {
         window.addEventListener('DOMContentLoaded', this.activateRoute.bind(this));
         window.addEventListener('popstate', this.activateRoute.bind(this));
         document.addEventListener('click', this.clickHandler.bind(this));
     }
 
-    async clickHandler(e) {
-        let element = null;
-        if (e.target.nodeName === 'A') {
-            element = e.target;
+    private async clickHandler(e :Event): Promise<void> {
+        let element: HTMLAnchorElement | null = null;
+        
+        const eventTargetElement = e.target as HTMLAnchorElement;
+
+        if (eventTargetElement.nodeName === 'A') {
+            element = e.target as HTMLAnchorElement;
         } else {
-            if (e.target.parentNode.nodeName === 'A') {
-                element = e.target.parentNode;
+            if (eventTargetElement.parentNode?.nodeName === 'A') {
+                element = eventTargetElement.parentNode as HTMLAnchorElement;
             }
         }
 
         if (element) {
             e.preventDefault();
 
-            const currentRoute = window.location.pathname;
-            const url = element.href.replace(window.location.origin, '');
+            const currentRoute: string = window.location.pathname;
+            const url: string = element.href.replace(window.location.origin, '');
             if (!url || currentRoute === url.replace('#', '') || url.startsWith('javascript:void(0)')) {
                 return;
             }
@@ -208,17 +220,20 @@ export class Router {
         }
     }
 
-    async openRoute(url) {
-        const currenrRoute = window.location.pathname;
+    private async openRoute(url: string): Promise<void> {
+        const currenrRoute: string = window.location.pathname;
         history.pushState({}, '', url);
         await this.activateRoute(null, currenrRoute);
     }
 
-    deactivationOldRoute(route) {
-        const oldRouteObject = this.routers.find(item => item.route === route);
+    private deactivationOldRoute(route: string) {
+        const oldRouteObject: RouteType | undefined = this.routers.find(item => item.route === route);
+
+        if(!oldRouteObject) return;
+
         if (oldRouteObject.styles && oldRouteObject.styles.length > 0) {
             oldRouteObject.styles.forEach(item => {
-                const file = document.querySelector(`link[href="/styles/${item}"]`);
+                const file: HTMLElement | null = document.querySelector(`link[href="/styles/${item}"]`);
                 if (file) {
                     file.remove();
                 }
@@ -226,7 +241,7 @@ export class Router {
         }
         if (oldRouteObject.scripts && oldRouteObject.scripts.length > 0) {
             oldRouteObject.scripts.forEach(item => {
-                const file = document.querySelector(`script[src="/js/${item}"]`);
+                const file: HTMLElement | null = document.querySelector(`script[src="/js/${item}"]`);
                 if (file) {
                     file.remove();
                 }
@@ -234,13 +249,15 @@ export class Router {
         }
     }
 
-    async activateRoute(e, oldRoute = null) {
+    private async activateRoute(e: Event | null, oldRoute?: string) {
+        if(!this.contentElement) return;
+
         if (oldRoute) {
             this.deactivationOldRoute(oldRoute);
         }
 
-        const path = (window.location.pathname).split('&')[0];
-        const newRouteObject = this.routers.find(item => item.route === path);
+        const path: string = (window.location.pathname).split('&')[0];
+        const newRouteObject: RouteType | undefined = this.routers.find(item => item.route === path);
 
         if (newRouteObject) {
             if (newRouteObject.authorization) {
@@ -250,13 +267,13 @@ export class Router {
                 }
             }
 
-            if (newRouteObject.title) {
+            if (newRouteObject.title && this.titleElement) {
                 this.titleElement.innerText = newRouteObject.title;
             }
 
-            let contentBlock = this.contentElement;
+            let contentBlock: HTMLElement | null = this.contentElement;
             if (newRouteObject.layout) {
-                const layout = await fetch(newRouteObject.layout);
+                const layout: Response = await fetch(newRouteObject.layout);
                 this.contentElement.innerHTML = await layout.text();
                 contentBlock = document.getElementById('content-layout');
 
@@ -265,12 +282,20 @@ export class Router {
                 if (!this.username) {
                     this.username = UserInfoUtils.getUserName();
                 }
-                document.getElementById('username').innerText = this.username;
-                document.getElementById('userBalance').innerText = await UserInfoUtils.getUserBalance() + '$';
+
+                const usernameElement = document.getElementById('username');
+                if(usernameElement){
+                    usernameElement.innerText = this.username;
+                }
+
+                const userBalanceElement = document.getElementById('userBalance');
+                if(userBalanceElement){
+                    userBalanceElement.innerText = await UserInfoUtils.getUserBalance() + '$';
+                }
             }
 
-            if (newRouteObject.content) {
-                const content = await fetch(newRouteObject.content);
+            if (newRouteObject.content && contentBlock) {
+                const content: Response = await fetch(newRouteObject.content);
                 contentBlock.innerHTML = await content.text();
             }
 

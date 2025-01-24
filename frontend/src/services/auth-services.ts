@@ -1,20 +1,23 @@
-import config from '../config/config.js';
-import { HttpUtils } from '../utils/http-utils.js';
-import { StorageUtils } from '../utils/storage-utils.js';
+import config from '../config/config';
+import { ErrorResponseType } from '../types/error-response.type';
+import { LoginResponseErrorType } from '../types/login-response-error.type';
+import { LoginResponseType } from '../types/login-response.type';
+import { LoginType } from '../types/login.type';
+import { PatternResponseType } from '../types/pattern-response.type';
+import { HttpUtils } from '../utils/http-utils';
+import { StorageUtils } from '../utils/storage-utils';
 
 export class Auth{
-    static async login(data){ 
-        let login = await HttpUtils.responce(config.api + '/login', false, 'POST', data);
+    public static async login(data: LoginType): Promise<LoginResponseType | boolean>{ 
+        let login: PatternResponseType = await HttpUtils.responce(config.api + '/login', false, 'POST', data);
 
-        if (login.error || 
-            !login.content.tokens ||
-            !login.content.tokens.accessToken || 
-            !login.content.tokens.refreshToken || 
-            !login.content.user) {
+        let loginResponseContent: LoginResponseType | LoginResponseErrorType = login.content;
+
+        if ((loginResponseContent as LoginResponseErrorType).error !== undefined) {
             return false;
         }
-
-        return login.content;
+    
+        return loginResponseContent as LoginResponseType;
     }
     
     static async signup(data){ 
