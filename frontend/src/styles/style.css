@@ -13,20 +13,21 @@
 }
 
 .nav-link .menu-icon__svg path{
-    fill: #052c65!important;
+    fill: #052c65;
 }
 
-.nav-link .menu-item__text{
-    color: #052c65!important;
+.menu-item__text{
+    color: #052c65;
 }
 
 .nav-link.active .menu-icon__svg path{
-    fill: white!important;
+    fill: white;
 }
 
 .nav-link.active .menu-item__text{
-    color: white!important;
-}
+    color: white;
+} 
+
 
 .dropdown-toggle::after,
 .dropend .btn-logout::after{

@@ -1,7 +1,7 @@
 import { Auth } from "../../services/auth-services.js";
 import { StorageUtils } from "../../utils/storage-utils.js";
 
-export class logout {
+export class Logout {
     constructor(openRoute) {
         this.openRoute = openRoute;
         this.logout();
