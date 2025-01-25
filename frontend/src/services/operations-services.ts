@@ -1,15 +1,16 @@
 import config from '../config/config.js';
+import { PatternResponseType } from '../types/pattern-response.type.js';
 import { HttpUtils } from '../utils/http-utils.js';
 
 export class OperationsServices {
-    static async getOperations(data) {  
-        const returnObject = {
+    static async getOperations(data: object): Promise<PatternResponseType> {
+        const returnObject: PatternResponseType = {
             error: false,
             redirect: null,
             content: null
         };
 
-        const operationsResponse = await HttpUtils.responce(config.api + '/operations' + data, true);
+        const operationsResponse: PatternResponseType = await HttpUtils.responce(config.api + '/operations' + data, true);
 
         if (operationsResponse.error || operationsResponse.redirect || !operationsResponse.content) {
             returnObject.error = true;
@@ -21,53 +22,53 @@ export class OperationsServices {
         return returnObject;
     }
 
-   
-    static async getOperation(id){
-        const returnObject = {
+
+    static async getOperation(id: number): Promise<PatternResponseType> {
+        const returnObject: PatternResponseType = {
             error: false,
             redirect: null,
             content: null
         };
 
-        const operationsResponse = await HttpUtils.responce(config.api + '/operations/' + id, true);
+        const operationsResponse: PatternResponseType = await HttpUtils.responce(config.api + '/operations/' + id, true);
 
         if (operationsResponse.error || operationsResponse.redirect || !operationsResponse.content) {
             returnObject.error = true;
-            if(operationsResponse.redirect){
+            if (operationsResponse.redirect) {
                 returnObject.redirect = '/operations-list';
             }
         }
         returnObject.content = operationsResponse.content;
         return returnObject;
     }
-  
-    static async editOperation(id, data){
-        const returnObject = {
+
+    static async editOperation(id: number, data: object): Promise<PatternResponseType> {
+        const returnObject: PatternResponseType = {
             error: false,
             redirect: null,
             content: null
         };
 
-        const operationsResponse = await HttpUtils.responce(config.api + '/operations/' + id, true, 'PUT', data);
+        const operationsResponse: PatternResponseType = await HttpUtils.responce(config.api + '/operations/' + id, true, 'PUT', data);
 
         if (operationsResponse.error || operationsResponse.redirect || !operationsResponse.content) {
             returnObject.error = true;
-            if(operationsResponse.redirect){
+            if (operationsResponse.redirect) {
                 returnObject.redirect = '/operations-list';
             }
         }
         returnObject.content = operationsResponse.content;
         return returnObject;
     }
-    
-    static async createOperation(data) {
-        const returnObject = {
+
+    static async createOperation(data: object): Promise<PatternResponseType> {
+        const returnObject: PatternResponseType = {
             error: false,
             redirect: null,
             content: null
         };
 
-        const operationsResponse = await HttpUtils.responce(config.api + '/operations', true, 'POST', data);
+        const operationsResponse: PatternResponseType = await HttpUtils.responce(config.api + '/operations', true, 'POST', data);
 
         if (operationsResponse.error || operationsResponse.redirect || !operationsResponse.content || !operationsResponse.content.id) {
             returnObject.error = true;
@@ -78,19 +79,19 @@ export class OperationsServices {
         returnObject.content = operationsResponse.content;
         return returnObject;
     }
-    
-    static async deleteOperation(id){
-        const returnObject = {
+
+    static async deleteOperation(id: number): Promise<PatternResponseType> {
+        const returnObject: PatternResponseType = {
             error: false,
             redirect: null,
             content: null
         };
 
-        const operationsResponse = await HttpUtils.responce(config.api + '/operations/' + id, true, 'DELETE');
+        const operationsResponse: PatternResponseType = await HttpUtils.responce(config.api + '/operations/' + id, true, 'DELETE');
 
         if (operationsResponse.error || operationsResponse.redirect || !operationsResponse.content) {
             returnObject.error = true;
-            if(operationsResponse.redirect){
+            if (operationsResponse.redirect) {
                 returnObject.redirect = '/operations-list';
             }
         }

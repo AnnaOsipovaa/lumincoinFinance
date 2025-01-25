@@ -1,4 +1,5 @@
 import { Auth } from '../../services/auth-services.js';
+import { LoginType } from '../../types/login.type.js';
 import { StorageUtils } from '../../utils/storage-utils.js';
 import { ValidationUtils } from '../../utils/validation-utils.js';
 

@@ -1,50 +1,46 @@
 import config from '../config/config';
-import { ErrorResponseType } from '../types/error-response.type';
-import { LoginResponseErrorType } from '../types/login-response-error.type';
 import { LoginResponseType } from '../types/login-response.type';
-import { LoginType } from '../types/login.type';
 import { PatternResponseType } from '../types/pattern-response.type';
+import { RefreshResponseType } from '../types/refresh-response.type';
+import { SignupResponseType } from '../types/signup-response.type';
 import { HttpUtils } from '../utils/http-utils';
 import { StorageUtils } from '../utils/storage-utils';
 
-export class Auth{
-    public static async login(data: LoginType): Promise<LoginResponseType | boolean>{ 
+export class Auth {
+    public static async login(data: object): Promise<LoginResponseType> {
         let login: PatternResponseType = await HttpUtils.responce(config.api + '/login', false, 'POST', data);
 
-        let loginResponseContent: LoginResponseType | LoginResponseErrorType = login.content;
-
-        if ((loginResponseContent as LoginResponseErrorType).error !== undefined) {
-            return false;
-        }
-    
-        return loginResponseContent as LoginResponseType;
-    }
-    
-    static async signup(data){ 
-        let signup = await HttpUtils.responce(config.api + '/signup', false, 'POST', data);
-
-        if (signup.error || 
-            !signup.content.user ||
-            !signup.content.user.id || 
-            !signup.content.user.email || 
-            !signup.content.user.name ||
-            !signup.content.user.lastName) {
-            return false;
+        if (login.error || login.redirect || !login.content) {
+            throw new Error();
         }
 
-        return signup.content;
+        let loginResponseContent: LoginResponseType = login.content;
+
+        return loginResponseContent;
     }
 
-    static async logout(data){
+    public static async signup(data: object): Promise<SignupResponseType> {
+        let signup: PatternResponseType = await HttpUtils.responce(config.api + '/signup', false, 'POST', data);
+
+        if (signup.error || signup.redirect || !signup.content) {
+            throw new Error();
+        }
+
+        let signupResponseContent: SignupResponseType = signup.content;
+
+        return signupResponseContent;
+    }
+
+    public static async logout(data: object): Promise<void> {
         await HttpUtils.responce(config.api + '/logout', false, 'POST', data);
     }
 
-    static async refresh(){
-        let result = false;
-        const refreshToken = StorageUtils.getAuthInfo(StorageUtils.refreshTokenKey);
+    public static async refresh(): Promise<boolean> {
+        let result: boolean = false;
+        const refreshToken: string = StorageUtils.getAuthInfo(StorageUtils.refreshTokenKey) as string;
 
         if (refreshToken) {
-            const response = await fetch(config.api + '/refresh', {
+            const response: Response = await fetch(config.api + '/refresh', {
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json',
@@ -56,16 +52,16 @@ export class Auth{
             });
 
             if (response.status === 200) {
-                const tokensInfo = await response.json();
+                const tokensInfo: RefreshResponseType = await response.json();
 
-                if (tokensInfo && !tokensInfo.error) {
-                    StorageUtils.setAuthInfo(tokensInfo.tokens.accessToken, tokensInfo.tokens.refreshToken);
+                if (tokensInfo) {
+                    StorageUtils.setAuthInfo((tokensInfo as RefreshResponseType).tokens.accessToken, (tokensInfo as RefreshResponseType).tokens.refreshToken);
                     result = true;
                 }
             }
         }
 
-        if(!result){
+        if (!result) {
             StorageUtils.removeAuthInfo();
         }
 

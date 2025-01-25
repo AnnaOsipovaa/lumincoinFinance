@@ -24,7 +24,7 @@ export class HttpUtils {
 
         let token: string | null = null;
         if (authorization) {
-            token = StorageUtils.getAuthInfo(StorageUtils.accessTokenKey) as st;
+            token = StorageUtils.getAuthInfo(StorageUtils.accessTokenKey) as string;
             if (token) {
                 params.headers['x-auth-token'] = token;
             }
@@ -46,8 +46,7 @@ export class HttpUtils {
                     } else {
                         const updateRefreshToken: boolean = await Auth.refresh();
                         if (updateRefreshToken) {
-                            this.responce(url, authorization, method, body);
-                            return result;
+                            await this.responce(url, authorization, method, body);
                         } else {
                             result.redirect = '/login';
                         }

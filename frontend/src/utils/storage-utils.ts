@@ -19,7 +19,7 @@ export class StorageUtils {
         localStorage.removeItem(this.userInfoKey);
     }
 
-    public static getAuthInfo(key?: string): string | object | null {
+    public static getAuthInfo(key: string | null): string | object | null {
         if (key) {
             switch (key) {
                 case this.accessTokenKey:
