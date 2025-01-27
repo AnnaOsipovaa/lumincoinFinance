@@ -1,9 +1,9 @@
-import config from '../config/config.js';
-import { PatternResponseType } from '../types/pattern-response.type.js';
-import { HttpUtils } from '../utils/http-utils.js';
+import config from '../config/config';
+import { PatternResponseType } from '../types/pattern-response.type';
+import { HttpUtils } from '../utils/http-utils';
 
 export class OperationsServices {
-    static async getOperations(data: object): Promise<PatternResponseType> {
+    static async getOperations(data: string): Promise<PatternResponseType> {
         const returnObject: PatternResponseType = {
             error: false,
             redirect: null,

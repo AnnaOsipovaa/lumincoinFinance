@@ -1,11 +1,14 @@
-import { CategoryExpenseServices } from "../../services/category-expenses-services.js";
-import { URLUtils } from "../../utils/url-utils.js";
+import { CategoryExpenseServices } from "../../services/category-expenses-services";
+import { PatternResponseType } from "../../types/pattern-response.type";
+import { URLUtils } from "../../utils/url-utils";
 
 export class CategoryExpensesDelete {
-    constructor(openRoute) {
+    readonly openRoute: any;
+
+    constructor(openRoute: any) {
         this.openRoute = openRoute;
 
-        const categoryId = URLUtils.getUrlParam('id');
+        const categoryId: number = Number(URLUtils.getUrlParam('id'));
         if (!categoryId) {
             this.openRoute('/login');
             return;
@@ -14,12 +17,12 @@ export class CategoryExpensesDelete {
         this.delete(categoryId);
     }
 
-    async delete(id) {
-        const response = await CategoryExpenseServices.deleteCategory(id);
-        if (response.error || response.redirect) {
+    private async delete(id: number): Promise<any> {
+        const response: PatternResponseType = await CategoryExpenseServices.deleteCategory(id);
+        if (response.error || response.redirect || !response.content) {
             alert('Ошибка при удалении категории.')
             return response.redirect ? this.openRoute(response.redirect) : null;
         }
-        this.openRoute('/expenses-category-list');
+        return this.openRoute('/expenses-category-list');
     }
 }

@@ -1,11 +1,14 @@
-import { OperationsServices } from "../../services/operations-services.js";
-import { URLUtils } from "../../utils/url-utils.js";
+import { OperationsServices } from "../../services/operations-services";
+import { PatternResponseType } from "../../types/pattern-response.type";
+import { URLUtils } from "../../utils/url-utils";
 
 export class OperationsDelete {
-    constructor(openRoute) {
+    readonly openRoute: any;
+
+    constructor(openRoute: any) {
         this.openRoute = openRoute;
 
-        const categoryId = URLUtils.getUrlParam('id');
+        const categoryId: number = Number(URLUtils.getUrlParam('id'));
         if (!categoryId) {
             this.openRoute('/login');
             return;
@@ -14,11 +17,14 @@ export class OperationsDelete {
         this.delete(categoryId);
     }
 
-    async delete(id) { 
-        const response = await OperationsServices.deleteOperation(id);
-        if (response.error || response.redirect) {
+    private async delete(id: number): Promise<void> {
+        const response: PatternResponseType = await OperationsServices.deleteOperation(id);
+        if (response.error || response.redirect || !response.content) {
             alert('Ошибка при удалении операции.')
-            return response.redirect ? this.openRoute(response.redirect) : null;
+            if(response.redirect){
+                this.openRoute(response.redirect);
+            }
+            return;
         }
         this.openRoute('/operations-list');
     }

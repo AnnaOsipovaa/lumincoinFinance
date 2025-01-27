@@ -1,14 +1,21 @@
 import { CategoryExpenseServices } from "../../services/category-expenses-services";
+import { CategoryType } from "../../types/category.type";
+import { PatternResponseType } from "../../types/pattern-response.type";
+import { ValidationType } from "../../types/validation.type";
 import { URLUtils } from "../../utils/url-utils";
 import { ValidationUtils } from "../../utils/validation-utils";
 
 export class CategoryExpensesEdit {
-    constructor(openRoute) {
-        this.openRoute = openRoute;
-        this.category = null;
-        this.nameCategoryElement = document.getElementById('name-category');
+    readonly openRoute: any; 
+    readonly nameCategoryElement: HTMLInputElement | null;
+    private category: CategoryType | null;
 
-        const categoryId = URLUtils.getUrlParam('id');
+    constructor(openRoute: any) {
+        this.openRoute = openRoute;
+        this.nameCategoryElement = document.getElementById('name-category') as HTMLInputElement;
+        this.category = null;
+
+        const categoryId: number = Number(URLUtils.getUrlParam('id'));
         if (!categoryId) {
             this.openRoute('/login');
             return;
@@ -16,33 +23,42 @@ export class CategoryExpensesEdit {
 
         this.getCategory(categoryId);
 
-        document.getElementById('save-category').addEventListener('click', this.save.bind(this));
+        const saveCategoryBtnElement: HTMLElement | null = document.getElementById('save-category');
+        if(saveCategoryBtnElement){
+            saveCategoryBtnElement.addEventListener('click', this.save.bind(this));
+        }
     }
 
-    async getCategory(id) {
-        const response = await CategoryExpenseServices.getCategory(id);
-        if (response.error || response.redirect) {
+    private async getCategory(id: number): Promise<void> {
+        const response: PatternResponseType = await CategoryExpenseServices.getCategory(id);
+        if (response.error || response.redirect || !response.content) {
             return response.redirect ? this.openRoute(response.redirect) : null;
         }
         this.category = response.content;
-        this.nameCategoryElement.value = response.content.title;
+        this.nameCategoryElement!.value = response.content.title;
     }
 
-    async save() {
-        this.validations = [
-            { element: this.nameCategoryElement, options: { notEqualTo: this.category.title } }
+    private async save(): Promise<void> {
+        if(!this.category) return;
+
+        const validations: ValidationType[] = [
+            { element: <HTMLInputElement>this.nameCategoryElement, options: { notEqualTo: this.category.title } }
         ];
 
-        if (ValidationUtils.validateForm(this.validations)) {
+        if (ValidationUtils.validateForm(validations)) {
             const response = await CategoryExpenseServices.editCategory(this.category.id, {
-                title: this.nameCategoryElement.value
+                title: this.nameCategoryElement!.value
             });
 
             if (response.error || response.redirect) {
                 alert('Ошибка при редактированиии категории.')
-                return response.redirect ? this.openRoute(response.redirect) : null;
+                if (response.redirect) {
+                    this.openRoute(response.redirect);
+                }
+                return;
             }
             this.openRoute('/expenses-category-list');
+            return;
         }
     }
 }

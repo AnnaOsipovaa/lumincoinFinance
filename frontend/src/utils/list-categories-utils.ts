@@ -1,10 +1,11 @@
 import { CategoryExpenseServices } from "../services/category-expenses-services";
 import { CategoryIncomeServices } from "../services/category-income-services";
+import { CategoryType } from "../types/category.type";
 import { OperationType } from "../types/operation.type";
 import { PatternResponseType } from "../types/pattern-response.type";
 
 export class ListCategoriesUtils {
-    public static async getCategories(operationType: OperationType): Promise<PatternResponseType> {
+    public static async getCategories(operationType: OperationType): Promise<CategoryType[]> {
         let response: PatternResponseType = {
             error: false,
             redirect: null,
@@ -21,6 +22,6 @@ export class ListCategoriesUtils {
             alert('Ошибка при получении списка категорий.');
         }
 
-        return response;
+        return response.content;
     }
 }

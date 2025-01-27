@@ -1,16 +1,29 @@
-import { Auth } from '../../services/auth-services.js';
-import { LoginType } from '../../types/login.type.js';
-import { StorageUtils } from '../../utils/storage-utils.js';
-import { ValidationUtils } from '../../utils/validation-utils.js';
+import { Auth } from '../../services/auth-services';
+import { LoginResponseType } from '../../types/login-response.type';
+import { ValidationType } from '../../types/validation.type';
+import { StorageUtils } from '../../utils/storage-utils';
+import { ValidationUtils } from '../../utils/validation-utils';
 
 export class Login {
-    constructor(openRoute) {
-        this.openRoute = openRoute;
-        document.getElementById('login').addEventListener('click', this.login.bind(this));
+    readonly openRoute: any;
 
-        this.emailInputElement = document.getElementById('email');
-        this.passwordInputElement = document.getElementById('password');
-        this.rememberMeInputElement = document.getElementById('remember-me');
+    readonly emailInputElement: HTMLInputElement | null;
+    readonly passwordInputElement: HTMLInputElement | null;
+    readonly rememberMeInputElement: HTMLInputElement | null;
+    readonly commonErrorElement: HTMLElement | null;
+    readonly validations!: ValidationType[];
+
+    constructor(openRoute: any) {
+        this.openRoute = openRoute;
+
+        const loginBtnElement: HTMLElement | null = document.getElementById('login');
+        if (loginBtnElement) {
+            loginBtnElement.addEventListener('click', this.login.bind(this));
+        }
+
+        this.emailInputElement = document.getElementById('email') as HTMLInputElement;
+        this.passwordInputElement = document.getElementById('password') as HTMLInputElement;
+        this.rememberMeInputElement = document.getElementById('remember-me') as HTMLInputElement;
         this.commonErrorElement = document.getElementById('common-error');
 
         if (StorageUtils.getAuthInfo(StorageUtils.accessTokenKey) &&
@@ -24,16 +37,16 @@ export class Login {
         ];
     }
 
-    async login() {
+    private async login(): Promise<void> {
         if (ValidationUtils.validateForm(this.validations)) {
-            let loginResult = await Auth.login({
-                email: this.emailInputElement.value,
-                password: this.passwordInputElement.value,
-                rememberMe: this.rememberMeInputElement.checked
+            let loginResult: LoginResponseType = await Auth.login({
+                email: this.emailInputElement!.value,
+                password: this.passwordInputElement!.value,
+                rememberMe: this.rememberMeInputElement!.checked
             });
 
             if (!loginResult) {
-                this.commonErrorElement.classList.remove('d-none');
+                this.commonErrorElement?.classList.remove('d-none');
                 return;
             }
 

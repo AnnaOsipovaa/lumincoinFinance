@@ -1,14 +1,21 @@
 import { CategoryIncomeServices } from "../../services/category-income-services";
+import { CategoryType } from "../../types/category.type";
+import { PatternResponseType } from "../../types/pattern-response.type";
+import { ValidationType } from "../../types/validation.type";
 import { URLUtils } from "../../utils/url-utils";
 import { ValidationUtils } from "../../utils/validation-utils";
 
 export class CategoryIncomeEdit {
-    constructor(openRoute) {
+    readonly openRoute: any;
+    readonly nameCategoryElement: HTMLInputElement | null;
+    private category: CategoryType | null;
+
+    constructor(openRoute: any) {
         this.openRoute = openRoute;
         this.category = null;
-        this.nameCategoryElement = document.getElementById('name-category');
+        this.nameCategoryElement = document.getElementById('name-category') as HTMLInputElement;
 
-        const categoryId = URLUtils.getUrlParam('id');
+        const categoryId: number = Number(URLUtils.getUrlParam('id'));
         if (!categoryId) {
             this.openRoute('/login');
             return;
@@ -16,33 +23,45 @@ export class CategoryIncomeEdit {
 
         this.getCategory(categoryId);
 
-        document.getElementById('save-category').addEventListener('click', this.save.bind(this));
+        const saveCategoryBtnElement: HTMLElement | null = document.getElementById('save-category');
+        if (saveCategoryBtnElement) {
+            saveCategoryBtnElement.addEventListener('click', this.save.bind(this));
+        }
     }
 
-    async getCategory(id) {
-        const response = await CategoryIncomeServices.getCategory(id);
-        if (response.error || response.redirect) {
-            return response.redirect ? this.openRoute(response.redirect) : null;
+    async getCategory(id: number) {
+        const response: PatternResponseType = await CategoryIncomeServices.getCategory(id);
+        if (response.error || response.redirect || !response.content) {
+            if (response.redirect) {
+                this.openRoute(response.redirect);
+            }
+            return;
         }
         this.category = response.content;
-        this.nameCategoryElement.value = response.content.title;
+        this.nameCategoryElement!.value = response.content.title;
     }
 
     async save() {
-        this.validations = [
-            { element: this.nameCategoryElement, options: { notEqualTo: this.category.title } }
+        if(!this.category) return;
+ 
+        const validations: ValidationType[] = [
+            { element: <HTMLInputElement>this.nameCategoryElement, options: { notEqualTo: this.category!.title } }
         ];
 
-        if (ValidationUtils.validateForm(this.validations)) {
+        if (ValidationUtils.validateForm(validations)) {
             const response = await CategoryIncomeServices.editCategory(this.category.id, {
-                title: this.nameCategoryElement.value
+                title: this.nameCategoryElement!.value
             });
 
             if (response.error || response.redirect) {
                 alert('Ошибка при редактированиии категории.')
-                return response.redirect ? this.openRoute(response.redirect) : null;
+                if (response.redirect) {
+                    this.openRoute(response.redirect);
+                }
+                return;
             }
             this.openRoute('/income-category-list');
+            return;
         }
     }
 }

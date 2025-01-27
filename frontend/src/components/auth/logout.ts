@@ -1,13 +1,15 @@
-import { Auth } from "../../services/auth-services.js";
-import { StorageUtils } from "../../utils/storage-utils.js";
+import { Auth } from "../../services/auth-services";
+import { StorageUtils } from "../../utils/storage-utils";
 
 export class Logout {
-    constructor(openRoute) {
+    readonly openRoute: any;
+
+    constructor(openRoute: any) {
         this.openRoute = openRoute;
         this.logout();
     }
 
-    async logout() {
+    private async logout(): Promise<void> {
         await Auth.logout({
             refreshToken: StorageUtils.getAuthInfo(StorageUtils.refreshTokenKey)
         });

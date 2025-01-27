@@ -1,6 +1,6 @@
 export type ValidationType = {
     element: HTMLInputElement, 
-    options: ValidationOptionsType
+    options?: ValidationOptionsType
 }
 
 export type ValidationOptionsType = {

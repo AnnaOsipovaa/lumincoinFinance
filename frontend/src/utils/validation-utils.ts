@@ -13,7 +13,7 @@ export class ValidationUtils {
         return isValid;
     }
 
-    private static validateField(element: HTMLInputElement, options: ValidationOptionsType): boolean {
+    private static validateField(element: HTMLInputElement, options?: ValidationOptionsType): boolean {
         const elementValue: string = element.value;
 
         let result: boolean = true;
