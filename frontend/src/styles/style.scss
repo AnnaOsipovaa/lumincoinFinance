@@ -1,4 +1,4 @@
-@import "bootstrap/dist/css/bootstrap";
+@import "bootstrap/scss/bootstrap";
 
 .logo-img{
     width: 98px;
@@ -12,26 +12,40 @@
     font-size: 14px;
 }
 
-.nav-link .menu-icon__svg path{
-    fill: #052c65;
+.nav-link{
+    .menu-icon__svg{
+        path{
+            fill: #052c65;
+        }
+    } 
 }
 
 .menu-item__text{
     color: #052c65;
 }
 
-.nav-link.active .menu-icon__svg path{
-    fill: white;
-}
-
-.nav-link.active .menu-item__text{
-    color: white;
+.nav-link.active{
+    .menu-icon__svg{
+        path{
+            fill: white;
+        }
+    }
 } 
 
+.nav-link.active{
+    .menu-item__text{
+        color: white;
+    }     
+}
 
-.dropdown-toggle::after,
-.dropend .btn-logout::after{
+.dropdown-toggle::after{
     display: none;
+}
+
+.dropend{
+    .btn-logout::after{
+        display: none;
+    }
 }
 
 .btn-check:checked+.btn, .btn.active, .btn.show, .btn:first-child:active, :not(.btn-check)+.btn:active {
