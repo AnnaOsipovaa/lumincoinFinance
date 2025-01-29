@@ -2,7 +2,7 @@ import { Router } from "./router";
 import { Auth } from "./services/auth-services";
 
 import './styles/style.scss'
-import * as bootstrap from 'bootstrap'
+import 'bootstrap';
 
 
 class App{
