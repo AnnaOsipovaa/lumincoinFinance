@@ -7,26 +7,38 @@ import { HttpUtils } from '../utils/http-utils';
 import { StorageUtils } from '../utils/storage-utils';
 
 export class Auth {
-    public static async login(data: object): Promise<LoginResponseType> {
-        let login: PatternResponseType = await HttpUtils.responce(config.api + '/login', false, 'POST', data);
+    public static async login(data: object): Promise<LoginResponseType | null> {
+        let loginResponseContent: LoginResponseType | null = null;
 
-        if (login.error || login.redirect || !login.content) {
-            throw new Error();
+        try {
+            let login: PatternResponseType = await HttpUtils.responce(config.api + '/login', false, 'POST', data);
+
+            if (login.error || login.redirect || !login.content) {
+                throw new Error();
+            }
+
+            loginResponseContent = login.content;
+        } catch (error) {
+            console.log(error);
         }
-
-        let loginResponseContent: LoginResponseType = login.content;
 
         return loginResponseContent;
     }
 
-    public static async signup(data: object): Promise<SignupResponseType> {
-        let signup: PatternResponseType = await HttpUtils.responce(config.api + '/signup', false, 'POST', data);
+    public static async signup(data: object): Promise<SignupResponseType | null> {
+        let signupResponseContent: SignupResponseType | null = null;
 
-        if (signup.error || signup.redirect || !signup.content) {
-            throw new Error();
+        try {
+            let signup: PatternResponseType = await HttpUtils.responce(config.api + '/signup', false, 'POST', data);
+
+            if (signup.error || signup.redirect || !signup.content) {
+                throw new Error();
+            }
+
+            signupResponseContent = signup.content;
+        } catch (error) {
+            console.log(error);
         }
-
-        let signupResponseContent: SignupResponseType = signup.content;
 
         return signupResponseContent;
     }

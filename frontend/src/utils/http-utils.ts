@@ -28,7 +28,7 @@ export class HttpUtils {
             if (token) {
                 params.headers['x-auth-token'] = token;
             }
-        }
+        } 
 
         let response: Response | null = null;
         try {
@@ -37,7 +37,7 @@ export class HttpUtils {
         } catch (error) {
             result.error = true;
         }
-
+ 
         if(response){
             if (response.status < 200 || response.status > 299) {
                 if (authorization && response.status === 401) {
@@ -46,7 +46,7 @@ export class HttpUtils {
                     } else {
                         const updateRefreshToken: boolean = await Auth.refresh();
                         if (updateRefreshToken) {
-                            await this.responce(url, authorization, method, body);
+                            return await this.responce(url, authorization, method, body);
                         } else {
                             result.redirect = '/login';
                         }

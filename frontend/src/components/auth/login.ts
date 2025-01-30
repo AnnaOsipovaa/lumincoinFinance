@@ -1,11 +1,12 @@
 import { Auth } from '../../services/auth-services';
 import { LoginResponseType } from '../../types/login-response.type';
+import { OpenRouteType } from '../../types/open-route.type';
 import { ValidationType } from '../../types/validation.type';
 import { StorageUtils } from '../../utils/storage-utils';
 import { ValidationUtils } from '../../utils/validation-utils';
 
 export class Login {
-    readonly openRoute: any;
+    readonly openRoute: OpenRouteType;
 
     readonly emailInputElement: HTMLInputElement | null;
     readonly passwordInputElement: HTMLInputElement | null;
@@ -13,7 +14,7 @@ export class Login {
     readonly commonErrorElement: HTMLElement | null;
     readonly validations!: ValidationType[];
 
-    constructor(openRoute: any) {
+    constructor(openRoute: OpenRouteType) {
         this.openRoute = openRoute;
 
         const loginBtnElement: HTMLElement | null = document.getElementById('login');
@@ -27,8 +28,10 @@ export class Login {
         this.commonErrorElement = document.getElementById('common-error');
 
         if (StorageUtils.getAuthInfo(StorageUtils.accessTokenKey) &&
-            StorageUtils.getAuthInfo(StorageUtils.refreshTokenKey)) {
-            return this.openRoute('/');
+            StorageUtils.getAuthInfo(StorageUtils.refreshTokenKey) &&
+            StorageUtils.getAuthInfo(StorageUtils.userInfoKey)) {
+            this.openRoute('/');
+            return;
         }
 
         this.validations = [
@@ -39,7 +42,7 @@ export class Login {
 
     private async login(): Promise<void> {
         if (ValidationUtils.validateForm(this.validations)) {
-            let loginResult: LoginResponseType = await Auth.login({
+            let loginResult: LoginResponseType | null= await Auth.login({
                 email: this.emailInputElement!.value,
                 password: this.passwordInputElement!.value,
                 rememberMe: this.rememberMeInputElement!.checked

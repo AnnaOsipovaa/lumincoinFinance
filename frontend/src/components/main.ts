@@ -6,9 +6,10 @@ import { UserOperationType } from '../types/user-operation.type';
 import { FilterOperationsType } from '../types/filter-operations.type';
 import { OperationType } from '../types/operation.type';
 import { DiagramInfoType } from '../types/diagram-info.type';
+import { OpenRouteType } from '../types/open-route.type';
 
 export class Main {
-    readonly openRoute: any;
+    readonly openRoute: OpenRouteType;
 
     readonly noOperationsTitle: HTMLElement | null;
     readonly diagramsIncomeBlockElement: HTMLElement | null;
@@ -22,7 +23,7 @@ export class Main {
     private diagramsIncome: Chart | null;
     private diagramsExpenses: Chart | null;
 
-    constructor(openRoute: any) {
+    constructor(openRoute: OpenRouteType) {
         this.openRoute = openRoute;
 
         this.noOperationsTitle = document.getElementById('no-operations-title');
@@ -60,7 +61,7 @@ export class Main {
         this.diagramsIncomeBlockElement.classList.add('d-none');
         this.diagramsExpensesBlockElement.classList.add('d-none');
 
-        const operations: UserOperationType[] = await this.getOperations(interval);
+        const operations: UserOperationType[] | undefined = await this.getOperations(interval);
         if (operations && operations.length > 0) {
             const filterOperationsForIncomeAndExpenses = this.filterOperationsForIncomeAndExpenses(operations);
 
@@ -80,7 +81,7 @@ export class Main {
         }
     }
 
-    private async getOperations(interval: DiagramIntervalType): Promise<UserOperationType[]> {
+    private async getOperations(interval: DiagramIntervalType): Promise<UserOperationType[] | undefined> {
         let params: string = '?period=' + interval;
         if (interval === DiagramIntervalType.interval && this.dateFromElement && this.dateToElement) {
             params += '&dateFrom=' + this.dateFromElement.value + '&dateTo=' + this.dateToElement.value;
@@ -88,8 +89,11 @@ export class Main {
 
         const response: PatternResponseType = await OperationsServices.getOperations(params);
         if (response.error || response.redirect || !response.content) {
-            alert('Ошибка при получении списка доходов и расходов.')
-            return response.redirect ? this.openRoute(response.redirect) : null;
+            alert('Ошибка при получении списка доходов и расходов.');
+            if(response.redirect){
+                this.openRoute(response.redirect);
+            }
+            return;
         }
 
         return response.content;

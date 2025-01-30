@@ -1,12 +1,13 @@
 import { CategoryIncomeServices } from "../../services/category-income-services";
 import { CategoryType } from "../../types/category.type";
+import { OpenRouteType } from "../../types/open-route.type";
 import { PatternResponseType } from "../../types/pattern-response.type";
 
 export class CategoryIncomeList {
-    readonly openRoute: any;
+    readonly openRoute: OpenRouteType;
     readonly confirmationDeleteBtnElement: HTMLAnchorElement | null;
 
-    constructor(openRoute: any) {
+    constructor(openRoute: OpenRouteType) {
         this.openRoute = openRoute;
         this.getCategories();
 

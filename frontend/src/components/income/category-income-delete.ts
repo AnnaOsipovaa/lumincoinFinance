@@ -1,11 +1,12 @@
 import { CategoryIncomeServices } from "../../services/category-income-services";
+import { OpenRouteType } from "../../types/open-route.type";
 import { PatternResponseType } from "../../types/pattern-response.type";
 import { URLUtils } from "../../utils/url-utils";
 
 export class CategoryIncomeDelete {
-    readonly openRoute: any;
+    readonly openRoute: OpenRouteType;
 
-    constructor(openRoute: any) {
+    constructor(openRoute: OpenRouteType) {
         this.openRoute = openRoute;
 
         const categoryId: number = Number(URLUtils.getUrlParam('id'));
@@ -27,6 +28,5 @@ export class CategoryIncomeDelete {
             return;
         }
         this.openRoute('/income-category-list');
-        return;
     }
 }

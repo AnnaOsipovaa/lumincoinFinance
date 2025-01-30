@@ -1,16 +1,17 @@
 import { CategoryExpenseServices } from "../../services/category-expenses-services";
 import { CategoryType } from "../../types/category.type";
+import { OpenRouteType } from "../../types/open-route.type";
 import { PatternResponseType } from "../../types/pattern-response.type";
 import { ValidationType } from "../../types/validation.type";
 import { URLUtils } from "../../utils/url-utils";
 import { ValidationUtils } from "../../utils/validation-utils";
 
 export class CategoryExpensesEdit {
-    readonly openRoute: any; 
+    readonly openRoute: OpenRouteType; 
     readonly nameCategoryElement: HTMLInputElement | null;
     private category: CategoryType | null;
 
-    constructor(openRoute: any) {
+    constructor(openRoute: OpenRouteType) {
         this.openRoute = openRoute;
         this.nameCategoryElement = document.getElementById('name-category') as HTMLInputElement;
         this.category = null;
@@ -32,7 +33,10 @@ export class CategoryExpensesEdit {
     private async getCategory(id: number): Promise<void> {
         const response: PatternResponseType = await CategoryExpenseServices.getCategory(id);
         if (response.error || response.redirect || !response.content) {
-            return response.redirect ? this.openRoute(response.redirect) : null;
+            if(response.redirect){
+                this.openRoute(response.redirect);
+            }
+            return;
         }
         this.category = response.content;
         this.nameCategoryElement!.value = response.content.title;
@@ -58,7 +62,6 @@ export class CategoryExpensesEdit {
                 return;
             }
             this.openRoute('/expenses-category-list');
-            return;
         }
     }
 }

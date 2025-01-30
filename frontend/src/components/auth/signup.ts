@@ -1,12 +1,13 @@
 import { Auth } from '../../services/auth-services';
 import { LoginResponseType } from '../../types/login-response.type';
+import { OpenRouteType } from '../../types/open-route.type';
 import { SignupResponseType } from '../../types/signup-response.type';
 import { ValidationType } from '../../types/validation.type';
 import { StorageUtils } from '../../utils/storage-utils';
 import { ValidationUtils } from '../../utils/validation-utils';
 
 export class Signup {
-    readonly openRoute: any;
+    readonly openRoute: OpenRouteType;
 
     readonly nameInputElement: HTMLInputElement | null;
     readonly emailInputElement: HTMLInputElement | null;
@@ -14,7 +15,7 @@ export class Signup {
     readonly repeatPasswordInputElement: HTMLInputElement | null;
     readonly commonErrorElement: HTMLElement | null;
 
-    constructor(openRoute: any) {
+    constructor(openRoute: OpenRouteType) {
         this.openRoute = openRoute;
 
         const signupBtnElement: HTMLElement | null = document.getElementById('signup');
@@ -30,7 +31,8 @@ export class Signup {
 
         if (StorageUtils.getAuthInfo(StorageUtils.accessTokenKey) &&
             StorageUtils.getAuthInfo(StorageUtils.refreshTokenKey)) {
-            return this.openRoute('/');
+            this.openRoute('/');
+            return;
         }
     }
 
@@ -47,7 +49,7 @@ export class Signup {
 
             if (!usernameArr) return;
 
-            const sipnupResult: SignupResponseType = await Auth.signup({
+            const sipnupResult: SignupResponseType | null = await Auth.signup({
                 name: usernameArr[1],
                 lastName: usernameArr[0],
                 email: this.emailInputElement!.value,
@@ -60,7 +62,7 @@ export class Signup {
                 return;
             }
 
-            let loginResult: LoginResponseType = await Auth.login({
+            let loginResult: LoginResponseType | null = await Auth.login({
                 email: this.emailInputElement!.value,
                 password: this.passwordInputElement!.value,
                 rememberMe: false

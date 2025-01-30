@@ -1,11 +1,12 @@
 import { OperationsServices } from "../../services/operations-services";
+import { OpenRouteType } from "../../types/open-route.type";
 import { PatternResponseType } from "../../types/pattern-response.type";
 import { URLUtils } from "../../utils/url-utils";
 
 export class OperationsDelete {
-    readonly openRoute: any;
+    readonly openRoute: OpenRouteType;
 
-    constructor(openRoute: any) {
+    constructor(openRoute: OpenRouteType) {
         this.openRoute = openRoute;
 
         const categoryId: number = Number(URLUtils.getUrlParam('id'));

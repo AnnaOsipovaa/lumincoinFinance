@@ -1,5 +1,4 @@
 import { Router } from "./router";
-import { Auth } from "./services/auth-services";
 
 import './styles/style.scss'
 import 'bootstrap';

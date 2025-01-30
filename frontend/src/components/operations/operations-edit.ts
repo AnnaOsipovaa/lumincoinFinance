@@ -1,5 +1,6 @@
 import { OperationsServices } from "../../services/operations-services";
 import { CategoryType } from "../../types/category.type";
+import { OpenRouteType } from "../../types/open-route.type";
 import { PatternResponseType } from "../../types/pattern-response.type";
 import { UserOperationType } from "../../types/user-operation.type";
 import { ValidationType } from "../../types/validation.type";
@@ -8,7 +9,7 @@ import { URLUtils } from "../../utils/url-utils";
 import { ValidationUtils } from "../../utils/validation-utils";
 
 export class OperationsEdit {
-    readonly openRoute: any;
+    readonly openRoute: OpenRouteType;
     private operation: UserOperationType | null = null;
     readonly selectTypeOparetionElement: HTMLSelectElement | null;
     readonly selectCategoryOperationElement: HTMLSelectElement | null;
@@ -17,7 +18,7 @@ export class OperationsEdit {
     readonly inputCommentOperationElement: HTMLInputElement | null;
     readonly validations!: ValidationType[];
 
-    constructor(openRoute: any) {
+    constructor(openRoute: OpenRouteType) {
         this.openRoute = openRoute;
 
         this.selectTypeOparetionElement = document.getElementById('type-operation') as HTMLSelectElement;
@@ -123,7 +124,7 @@ export class OperationsEdit {
                 amount: this.inputSummaOperationElement!.value,
                 date: this.inputDateOperationElement!.value,
                 comment: this.inputCommentOperationElement!.value,
-                category_id: this.selectCategoryOperationElement!.value
+                category_id: Number(this.selectCategoryOperationElement!.value)
             });
 
             if (response.error || response.redirect || !response.content) {

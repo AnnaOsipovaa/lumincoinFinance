@@ -1,10 +1,11 @@
 import { Auth } from "../../services/auth-services";
+import { OpenRouteType } from "../../types/open-route.type";
 import { StorageUtils } from "../../utils/storage-utils";
 
 export class Logout {
-    readonly openRoute: any;
+    readonly openRoute: OpenRouteType;
 
-    constructor(openRoute: any) {
+    constructor(openRoute: OpenRouteType) {
         this.openRoute = openRoute;
         this.logout();
     }

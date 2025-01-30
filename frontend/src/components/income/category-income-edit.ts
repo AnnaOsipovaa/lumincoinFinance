@@ -1,16 +1,17 @@
 import { CategoryIncomeServices } from "../../services/category-income-services";
 import { CategoryType } from "../../types/category.type";
+import { OpenRouteType } from "../../types/open-route.type";
 import { PatternResponseType } from "../../types/pattern-response.type";
 import { ValidationType } from "../../types/validation.type";
 import { URLUtils } from "../../utils/url-utils";
 import { ValidationUtils } from "../../utils/validation-utils";
 
 export class CategoryIncomeEdit {
-    readonly openRoute: any;
+    readonly openRoute: OpenRouteType;
     readonly nameCategoryElement: HTMLInputElement | null;
     private category: CategoryType | null;
 
-    constructor(openRoute: any) {
+    constructor(openRoute: OpenRouteType) {
         this.openRoute = openRoute;
         this.category = null;
         this.nameCategoryElement = document.getElementById('name-category') as HTMLInputElement;
@@ -61,7 +62,6 @@ export class CategoryIncomeEdit {
                 return;
             }
             this.openRoute('/income-category-list');
-            return;
         }
     }
 }

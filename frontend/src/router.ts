@@ -41,10 +41,7 @@ export class Router {
                 authorization: true,
                 load: () => {
                     new Main(this.openRoute.bind(this));
-                },
-                styles: [
-                    'main.css'
-                ]
+                }
             },
             {
                 route: '/login',
@@ -79,10 +76,7 @@ export class Router {
                 authorization: true,
                 load: () => {
                     new OperationsList(this.openRoute.bind(this));
-                },
-                styles: [
-                    'main.css'
-                ]
+                }
             },
             {
                 route: '/operations-edit',
@@ -280,7 +274,7 @@ export class Router {
                 LayoutMenuUtils.markMenu(path);
 
                 if (!this.username) {
-                    this.username = UserInfoUtils.getUserName();
+                    this.username = UserInfoUtils.getUserName(this.openRoute.bind(this));
                 }
 
                 const usernameElement = document.getElementById('username');
@@ -290,7 +284,7 @@ export class Router {
 
                 const userBalanceElement = document.getElementById('userBalance');
                 if(userBalanceElement){
-                    userBalanceElement.innerText = await UserInfoUtils.getUserBalance() + '$';
+                    userBalanceElement.innerText = await UserInfoUtils.getUserBalance(this.openRoute.bind(this)) + '$';
                 }
             }
 

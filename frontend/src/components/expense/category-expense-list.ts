@@ -1,12 +1,13 @@
 import { CategoryExpenseServices } from "../../services/category-expenses-services";
 import { CategoryType } from "../../types/category.type";
+import { OpenRouteType } from "../../types/open-route.type";
 import { PatternResponseType } from "../../types/pattern-response.type";
 
 export class CategoryExpensList {
-    readonly openRoute: any;
+    readonly openRoute: OpenRouteType;
     readonly confirmationDeleteBtnElement: HTMLAnchorElement | null;
 
-    constructor(openRoute: any) {
+    constructor(openRoute: OpenRouteType) {
         this.openRoute = openRoute;
         this.getCategories();
 

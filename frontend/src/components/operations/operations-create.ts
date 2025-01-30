@@ -1,5 +1,6 @@
 import { OperationsServices } from "../../services/operations-services";
 import { CategoryType } from "../../types/category.type";
+import { OpenRouteType } from "../../types/open-route.type";
 import { OperationType } from "../../types/operation.type";
 import { PatternResponseType } from "../../types/pattern-response.type";
 import { ValidationType } from "../../types/validation.type";
@@ -8,7 +9,7 @@ import { URLUtils } from "../../utils/url-utils";
 import { ValidationUtils } from "../../utils/validation-utils";
 
 export class OperationsCreate {
-    readonly openRoute: any;
+    readonly openRoute: OpenRouteType;
     readonly selectTypeOparetionElement: HTMLInputElement | null;
     readonly selectCategoryOperationElement: HTMLInputElement | null;
     readonly inputSummaOperationElement: HTMLInputElement | null;
@@ -16,7 +17,7 @@ export class OperationsCreate {
     readonly inputCommentOperationElement: HTMLInputElement | null;
     readonly validations!: ValidationType[];
 
-    constructor(openRoute: any) {
+    constructor(openRoute: OpenRouteType) {
         this.openRoute = openRoute;
 
         this.selectTypeOparetionElement = document.getElementById('type-operation') as HTMLInputElement;

@@ -1,18 +1,19 @@
 import { OperationsServices } from "../../services/operations-services";
 import { DiagramIntervalType } from "../../types/diagram-interval.type";
+import { OpenRouteType } from "../../types/open-route.type";
 import { OperationType } from "../../types/operation.type";
 import { PatternResponseType } from "../../types/pattern-response.type";
 import { UserOperationType } from "../../types/user-operation.type";
 
 export class OperationsList {
-    readonly openRoute: any;
+    readonly openRoute: OpenRouteType;
 
     readonly intervalInputsElement: HTMLInputElement | null;
     readonly dateFromElement: HTMLInputElement | null;
     readonly dateToElement: HTMLInputElement | null;
     readonly confirmationDeleteBtnElement: HTMLAnchorElement | null;
 
-    constructor(openRoute: any) {
+    constructor(openRoute: OpenRouteType) {
         this.openRoute = openRoute;
 
         this.intervalInputsElement = document.getElementById('interval-inputs') as HTMLInputElement;
