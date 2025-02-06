@@ -12,7 +12,7 @@ export class Logout {
 
     private async logout(): Promise<void> {
         await Auth.logout({
-            refreshToken: StorageUtils.getAuthInfo(StorageUtils.refreshTokenKey)
+            refreshToken: StorageUtils.getAuthToken(StorageUtils.refreshTokenKey)
         });
 
         StorageUtils.removeAuthInfo();

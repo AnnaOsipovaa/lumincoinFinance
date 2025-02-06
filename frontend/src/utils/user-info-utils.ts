@@ -8,7 +8,7 @@ import { OpenRouteType } from "../types/open-route.type";
 
 export class UserInfoUtils {
     public static getUserName(openRoute: OpenRouteType): string {
-        let userInfo: UserInfoType = StorageUtils.getAuthInfo(StorageUtils.userInfoKey) as UserInfoType;
+        let userInfo: UserInfoType = StorageUtils.getAuthUserInfo() as UserInfoType;
 
         let fullUsername: string = '';
         if (userInfo) {

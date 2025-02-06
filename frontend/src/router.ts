@@ -255,7 +255,7 @@ export class Router {
 
         if (newRouteObject) {
             if (newRouteObject.authorization) {
-                if (!StorageUtils.getAuthInfo(StorageUtils.accessTokenKey) || !StorageUtils.getAuthInfo(StorageUtils.refreshTokenKey)) {
+                if (!StorageUtils.getAuthToken(StorageUtils.accessTokenKey) || !StorageUtils.getAuthToken(StorageUtils.refreshTokenKey)) {
                     this.openRoute('/login');
                     return;
                 }

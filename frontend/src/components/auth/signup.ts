@@ -29,8 +29,8 @@ export class Signup {
         this.repeatPasswordInputElement = document.getElementById('repeat-password') as HTMLInputElement;
         this.commonErrorElement = document.getElementById('common-error');
 
-        if (StorageUtils.getAuthInfo(StorageUtils.accessTokenKey) &&
-            StorageUtils.getAuthInfo(StorageUtils.refreshTokenKey)) {
+        if (StorageUtils.getAuthToken(StorageUtils.accessTokenKey) &&
+            StorageUtils.getAuthToken(StorageUtils.refreshTokenKey)) {
             this.openRoute('/');
             return;
         }

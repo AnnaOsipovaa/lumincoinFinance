@@ -24,7 +24,7 @@ export class HttpUtils {
 
         let token: string | null = null;
         if (authorization) {
-            token = StorageUtils.getAuthInfo(StorageUtils.accessTokenKey) as string;
+            token = StorageUtils.getAuthToken(StorageUtils.accessTokenKey) as string;
             if (token) {
                 params.headers['x-auth-token'] = token;
             }

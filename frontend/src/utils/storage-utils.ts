@@ -19,28 +19,24 @@ export class StorageUtils {
         localStorage.removeItem(this.userInfoKey);
     }
 
-    public static getAuthInfo(key: string | null): string | object | null {
-        if (key) {
-            switch (key) {
-                case this.accessTokenKey:
-                    return localStorage.getItem(this.accessTokenKey);
-                case this.refreshTokenKey:
-                    return localStorage.getItem(this.refreshTokenKey);
-                case this.userInfoKey:
-                    const userInfo: string | null = localStorage.getItem(this.userInfoKey);
-                    if(userInfo){
-                        return JSON.parse(userInfo);
-                    }
-                default:
-                    return null;
-            }
-        } else {
-            const userInfo: string | null = localStorage.getItem(this.userInfoKey);
-            return {
-                [this.accessTokenKey]: localStorage.getItem(this.accessTokenKey),
-                [this.refreshTokenKey]: localStorage.getItem(this.refreshTokenKey),
-                [this.userInfoKey]: userInfo ? JSON.parse(userInfo) : null
-            }
+    public static getAuthUserInfo(): UserInfoType | null {
+        let userInfo: UserInfoType | null = null;
+        const userInfoString: string | null = localStorage.getItem(this.userInfoKey);
+        if (userInfoString) {
+            userInfo = JSON.parse(userInfoString);
+        }
+        return userInfo;
+    }
+
+    public static getAuthToken(key: string): string | null {
+        switch (key) {
+            case this.accessTokenKey:
+                return localStorage.getItem(this.accessTokenKey);
+
+            case this.refreshTokenKey:
+                return localStorage.getItem(this.refreshTokenKey);
+            default:
+                return null;
         }
     }
 }

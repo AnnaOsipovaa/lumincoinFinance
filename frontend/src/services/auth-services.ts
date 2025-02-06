@@ -49,7 +49,7 @@ export class Auth {
 
     public static async refresh(): Promise<boolean> {
         let result: boolean = false;
-        const refreshToken: string = StorageUtils.getAuthInfo(StorageUtils.refreshTokenKey) as string;
+        const refreshToken: string = StorageUtils.getAuthToken(StorageUtils.refreshTokenKey) as string;
 
         if (refreshToken) {
             const response: Response = await fetch(config.api + '/refresh', {

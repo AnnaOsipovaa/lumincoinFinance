@@ -27,9 +27,9 @@ export class Login {
         this.rememberMeInputElement = document.getElementById('remember-me') as HTMLInputElement;
         this.commonErrorElement = document.getElementById('common-error');
 
-        if (StorageUtils.getAuthInfo(StorageUtils.accessTokenKey) &&
-            StorageUtils.getAuthInfo(StorageUtils.refreshTokenKey) &&
-            StorageUtils.getAuthInfo(StorageUtils.userInfoKey)) {
+        if (StorageUtils.getAuthToken(StorageUtils.accessTokenKey) &&
+            StorageUtils.getAuthToken(StorageUtils.refreshTokenKey) &&
+            StorageUtils.getAuthUserInfo()) {
             this.openRoute('/');
             return;
         }
